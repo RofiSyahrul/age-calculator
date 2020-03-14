@@ -2,14 +2,20 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "src/*": ["src/*"]
+      "src/*": [
+        "src/*"
+      ]
     },
     "target": "es6",
     "jsx": "preserve",
     "module": "commonjs",
     "allowSyntheticDefaultImports": true
   },
-  "exclude": ["node_modules", "**/node_modules/*"]
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    ".git",
+    "build",
+    "public"
+  ]
 }
-
-

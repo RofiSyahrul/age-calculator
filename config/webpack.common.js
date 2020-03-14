@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -85,6 +86,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'New Tab',
       template: './public/index.html'
+    }),
+    new webpack.DefinePlugin({
+      'process.env.APP_VERSION': JSON.stringify(
+        process.env.npm_package_version
+      )
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',

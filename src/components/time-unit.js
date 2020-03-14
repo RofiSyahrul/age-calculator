@@ -14,7 +14,7 @@ const TimeUnit = ({ value = 0, unit = '' }) => (
       shadow={shadow}
     >
       <Text size="75px" weight="bold" align="center">
-        {value}
+        {isNaN(value) ? '-' : value}
       </Text>
     </Wrapper>
     <Text size="30px" align="center">

@@ -1,7 +1,7 @@
 {
   "short_name": "Chrome Extension",
   "name": "Chrome Extension by Rofi",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Build an Extension using react!",
   "manifest_version": 2,
   "icons": {
@@ -13,5 +13,6 @@
   },
   "permissions": [
     "storage"
-  ]
+  ],
+  "content_security_policy": "script-src 'self' 'sha256-FyiKpy3PpN1/MM6lBhmjdt7P5PXAcmjHEWQr2bhYhkk=''; object-src 'self'"
 }

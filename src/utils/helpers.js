@@ -12,10 +12,7 @@ function getDaysInMonth(date = new Date()) {
 function getMultiplier(daysInMonth = 30) {
   return {
     month: 12,
-    day: daysInMonth,
-    hour: 24,
-    minute: 60,
-    second: 60
+    day: daysInMonth
   };
 }
 
@@ -26,16 +23,35 @@ export function getAge() {
   );
   const dob = dayjs(birthDate);
 
-  let float;
   const multiplier = getMultiplier(getDaysInMonth(lastMonth));
-  return timeUnits.reduce((obj, unit, i, arr) => {
+  const daysDiffInSeconds = now.diff(dob, 'd') * 24 * 60 * 60;
+  const actualSecondsDiff = now.diff(dob, 's');
+  const remainingSecondsDiff = actualSecondsDiff - daysDiffInSeconds;
+
+  const ageObj = timeUnits
+    .slice(3)
+    .reverse()
+    .reduce(
+      (obj, unit) => {
+        if (unit !== 'hour') {
+          obj[unit] = obj.rem % 60;
+          obj.rem = (obj.rem - obj[unit]) / 60;
+        } else {
+          obj[unit] = obj.rem;
+        }
+        return obj;
+      },
+      { rem: remainingSecondsDiff }
+    );
+
+  let float;
+  return timeUnits.slice(0, 3).reduce((obj, unit, i, arr) => {
     if (i === 0) {
       float = now.diff(dob, 'y', true);
-      obj[unit] = Math.floor(float);
-      return obj;
+    } else {
+      float = (float - obj[arr[i - 1]]) * multiplier[unit];
     }
-    float = (float - obj[arr[i - 1]]) * multiplier[unit];
     obj[unit] = Math.floor(float);
     return obj;
-  }, {});
+  }, ageObj);
 }

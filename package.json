@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Build chrome extension using react",
   "scripts": {
     "prebuild": "node generate-build-version",
@@ -15,7 +15,7 @@
     "extension"
   ],
   "author": "Rofi",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "dayjs": "^1.8.22",
     "react": "^16.13.0",

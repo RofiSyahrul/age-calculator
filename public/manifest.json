@@ -1,7 +1,7 @@
 {
   "short_name": "Chrome Extension",
   "name": "Chrome Extension by Rofi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Build an Extension using react!",
   "manifest_version": 2,
   "icons": {

@@ -1,0 +1,17 @@
+{
+  "short_name": "Chrome Extension",
+  "name": "Chrome Extension by Rofi",
+  "version": "1.0.0",
+  "description": "Build an Extension using react!",
+  "manifest_version": 2,
+  "icons": {
+    "192": "assets/manifest-icon-192.png",
+    "512": "assets/manifest-icon-512.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": [
+    "storage"
+  ]
+}

@@ -75,6 +75,7 @@ const GlobalCss = css`
     background: ${colors.background};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: 'Source Sans Pro';
   }
   body ::-webkit-scrollbar {
     -webkit-appearance: none;

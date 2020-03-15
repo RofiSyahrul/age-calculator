@@ -68,7 +68,8 @@
       {
         "allowForLoopAfterthoughts": true
       }
-    ]
+    ],
+    "no-restricted-globals": "off"
   },
   "settings": {
     "import/resolver": {

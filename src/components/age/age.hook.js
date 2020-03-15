@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
+import { useAppContext } from 'src/context';
 import { getAge } from 'src/utils/helpers';
 
 export const useAge = () => {
-  const [age, setAge] = useState(getAge());
+  const {
+    states: { birthDate }
+  } = useAppContext();
+
+  const [age, setAge] = useState(getAge(birthDate));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setAge(getAge());
+      setAge(getAge(birthDate));
     }, 1000);
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, []);
+  }, [birthDate]);
+
   return age;
 };

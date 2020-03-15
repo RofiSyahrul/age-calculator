@@ -2,6 +2,7 @@ import React from 'react';
 import Wrapper from 'src/components/wrapper';
 import Text from 'src/components/text';
 import TimeUnit from 'src/components/time-unit';
+import Confetti from 'src/components/confetti';
 import { timeUnits } from 'src/utils/constants';
 import { useAge } from './age.hook';
 
@@ -10,6 +11,7 @@ export default function Age() {
 
   return (
     <Wrapper width="700px">
+      {age.month === 0 && age.day === 0 && <Confetti />}
       <Text size="100px" weight="bold">
         Age
       </Text>

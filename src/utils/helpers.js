@@ -6,7 +6,8 @@ export const getLocalStorage = (key = '') =>
   new Promise(resolve => {
     try {
       chrome.storage.local.get([key], result => {
-        resolve(result[key]);
+        const res = result[key];
+        resolve(typeof res !== 'string' ? '' : res);
       });
     } catch {
       resolve(localStorage.getItem(key));

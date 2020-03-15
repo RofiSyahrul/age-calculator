@@ -10,9 +10,7 @@ export const useAppState = () => {
   const [birthDate, setBirthDate] = useState('');
 
   useEffect(() => {
-    getDob().then(dob => {
-      setBirthDate(dob);
-    });
+    getDob().then(dob => setBirthDate(dob));
   }, []);
 
   const changeBirthDate = date => {
@@ -22,7 +20,7 @@ export const useAppState = () => {
       date.date()
     );
     setBirthDate(newBirthDate);
-    setLocalStorage('dob', newBirthDate);
+    setLocalStorage('dob', newBirthDate.toISOString());
   };
 
   return { states: { birthDate }, actions: { changeBirthDate } };

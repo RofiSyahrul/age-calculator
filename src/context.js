@@ -5,9 +5,10 @@ import {
   useEffect
 } from 'react';
 import { getDob, setLocalStorage } from './utils/helpers';
+import { defaultDob } from './utils/constants';
 
 export const useAppState = () => {
-  const [birthDate, setBirthDate] = useState('');
+  const [birthDate, setBirthDate] = useState(defaultDob);
 
   useEffect(() => {
     getDob().then(dob => setBirthDate(dob));

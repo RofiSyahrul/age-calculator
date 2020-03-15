@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const archiveBuild = require('./archive-build');
 
 if (!fs.existsSync('./build')) {
   fs.mkdirSync('./build');
@@ -21,3 +22,5 @@ fs.writeFileSync(
   JSON.stringify(manifest, null, 2),
   'utf8'
 );
+
+archiveBuild();

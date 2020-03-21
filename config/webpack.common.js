@@ -103,9 +103,8 @@ module.exports = {
     new CopyWebpackPlugin([{ from: 'public' }])
   ],
   output: {
-    path: path.resolve(__dirname, '..', 'build'),
     publicPath: '/',
-    filename: 'js/bundle.js',
+    filename: 'js/bundle-[hash].js',
     chunkFilename: 'js/[name].js'
   }
 };

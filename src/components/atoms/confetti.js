@@ -27,6 +27,7 @@ const Confetti = () => {
       width={size.width}
       height={size.height}
       numberOfPieces="700"
+      style={{ position: 'fixed' }}
     />
   );
 };

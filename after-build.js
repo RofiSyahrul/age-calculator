@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const archiveBuild = require('./archive-build');
+const updateReadme = require('./update-readme');
 
 if (!fs.existsSync('./build')) {
   fs.mkdirSync('./build');
@@ -24,3 +25,4 @@ fs.writeFileSync(
 );
 
 archiveBuild();
+updateReadme();

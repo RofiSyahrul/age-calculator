@@ -1,18 +1,18 @@
 import React from 'react';
-import Wrapper from 'src/components/wrapper';
-import Text from 'src/components/text';
-import TimeUnit from 'src/components/time-unit';
-import Confetti from 'src/components/confetti';
+import Wrapper from 'src/components/atoms/wrapper';
+import Text from 'src/components/atoms/text';
+import TimeUnit from 'src/components/molecules/time-unit';
+import Confetti from 'src/components/atoms/confetti';
 import { timeUnits } from 'src/utils/constants';
 import { useAge } from './age.hook';
 
 export default function Age() {
-  const age = useAge();
+  const { age, colors } = useAge();
 
   return (
     <Wrapper width="700px">
       {age.month === 0 && age.day === 0 && <Confetti />}
-      <Text size="100px" weight="bold">
+      <Text size="100px" weight="bold" color={colors.secondary}>
         Age
       </Text>
       <Wrapper

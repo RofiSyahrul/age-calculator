@@ -72,7 +72,8 @@ const GlobalCss = css`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: ${colors.background};
+    background: ${({ background }) =>
+      background || colors.background};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: 'Source Sans Pro';

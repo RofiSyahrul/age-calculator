@@ -4,7 +4,7 @@ import { getAge } from 'src/utils/helpers';
 
 export const useAge = () => {
   const {
-    states: { birthDate }
+    states: { birthDate, colors }
   } = useAppContext();
 
   const [age, setAge] = useState(getAge(birthDate));
@@ -19,5 +19,5 @@ export const useAge = () => {
     };
   }, [birthDate]);
 
-  return age;
+  return { age, colors };
 };

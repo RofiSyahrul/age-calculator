@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   DatePicker,
   MuiPickersUtilsProvider
 } from '@material-ui/pickers';
 import DayjsUtils from '@date-io/dayjs';
 import { useAppContext } from 'src/context';
-import { colors } from 'src/utils/constants';
-import Wrapper from './wrapper';
-
-const styles = { style: { color: colors.white } };
+import Wrapper from '../atoms/wrapper';
 
 const BirthdatePicker = () => {
   const {
-    states: { birthDate },
+    states: { birthDate, colors },
     actions: { changeBirthDate }
   } = useAppContext();
 
+  const styles = useMemo(() => ({ style: { color: colors.white } }), [
+    colors
+  ]);
+
   return (
-    <Wrapper position="absolute" top="0" right="0" padding="16px">
+    <Wrapper width="100%" margin="8px 0">
       <MuiPickersUtilsProvider utils={DayjsUtils}>
         <DatePicker
           InputProps={styles}
@@ -33,6 +34,7 @@ const BirthdatePicker = () => {
           InputAdornmentProps={{ position: 'start' }}
           value={birthDate}
           onChange={changeBirthDate}
+          style={{ width: '100%' }}
         />
       </MuiPickersUtilsProvider>
     </Wrapper>

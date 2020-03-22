@@ -1,6 +1,6 @@
 {
   "name": "age-calculator",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Age Calculator and Updater as Chrome Extension by Rofi",
   "scripts": {
     "prebuild": "node generate-build-version",

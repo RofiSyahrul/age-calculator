@@ -7,6 +7,7 @@ if (!fs.existsSync('./build')) {
   fs.mkdirSync('./build');
 }
 
+const jsFiles = fs.readdirSync('./build/js');
 const manifestPath = path.join(__dirname, 'build', 'manifest.json');
 const manifestJson =
   fs.readFileSync(manifestPath, {
@@ -15,7 +16,10 @@ const manifestJson =
 const manifest = JSON.parse(manifestJson);
 
 manifest.content_scripts = [
-  { matches: ['http://*/*', 'https://*/*'], js: ['/js/bundle.js'] }
+  {
+    matches: ['http://*/*', 'https://*/*'],
+    js: jsFiles.map(str => `/js/${str}`)
+  }
 ];
 
 fs.writeFileSync(

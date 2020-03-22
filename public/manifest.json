@@ -1,7 +1,7 @@
 {
   "short_name": "Age Calculator and Updater",
   "name": "Age Calculator and Updater by Rofi",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Age Calculator and Updater as Chrome Extension by Rofi",
   "manifest_version": 2,
   "icons": {

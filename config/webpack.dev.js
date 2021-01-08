@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const path = require('path');
 
 module.exports = {
   mode: 'development',
@@ -9,9 +8,6 @@ module.exports = {
     contentBase: './public',
     hot: true,
     historyApiFallback: true,
-    port: 8045
+    port: 8045,
   },
-  output: {
-    path: path.resolve(__dirname, '..', 'dist')
-  }
 };

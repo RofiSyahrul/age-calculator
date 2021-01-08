@@ -17,11 +17,11 @@ module.exports = () => {
   removeExistingTargetZip();
   const target = path.join(
     __dirname,
-    `${name}-${version.replace(/\./g, '-')}.zip`
+    `${name}-${version.replace(/\./g, '-')}.zip`,
   );
   const output = fs.createWriteStream(target);
   const archive = archiver('zip', {
-    zlib: { level: 9 }
+    zlib: { level: 9 },
   });
 
   console.log(`Archiving build directory to ${target}...`);
@@ -29,7 +29,7 @@ module.exports = () => {
   output.on('close', () => {
     console.log(`${archive.pointer()} total bytes`);
     console.log(
-      'archiver has been finalized and the output file descriptor has closed.'
+      'archiver has been finalized and the output file descriptor has closed.',
     );
   });
 

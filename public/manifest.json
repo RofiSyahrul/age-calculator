@@ -1,20 +1,22 @@
 {
   "short_name": "Age Calculator and Updater",
   "name": "Age Calculator and Updater by Rofi",
-  "version": "1.2.6",
+  "version": "2.0.1",
+  "theme_color": "#366091",
+  "background_color": "#151f22",
+  "start_url": ".",
+  "display": "standalone",
   "description": "Age Calculator and Updater as Chrome Extension by Rofi",
-  "manifest_version": 2,
-  "icons": {
-    "192": "assets/manifest-icon-192.png",
-    "512": "assets/manifest-icon-512.png"
-  },
-  "chrome_url_overrides": {
-    "newtab": "index.html"
-  },
-  "permissions": [
-    "storage",
-    "tabs"
-  ],
-  "browser_action": {},
-  "content_security_policy": "script-src 'self' 'sha256-FyiKpy3PpN1/MM6lBhmjdt7P5PXAcmjHEWQr2bhYhkk='; style-src 'self' 'unsafe-inline'; object-src 'self'; default-src 'self' 'unsafe-inline'"
+  "icons": [
+    {
+      "src": "assets/manifest-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/manifest-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

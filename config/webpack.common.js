@@ -1,110 +1,142 @@
-const path = require('path');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const Critters = require('critters-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const { alias, entry, root, src, build } = require('../.paths');
+const { keywords } = require('../package.json');
+const {
+  name,
+  description,
+  theme_color,
+} = require('../public/manifest.json');
 
-const uglifyjs = new UglifyJsPlugin({
-  cache: true,
-  parallel: true,
-  sourceMap: true,
-  uglifyOptions: {
-    output: {
-      comments: false
-    }
-  }
+const isExtension = process.env.BUILD_ENV === 'extension';
+const viewport =
+  'width=device-width, initial-scale=1.0, maximum-scale=5.0';
+
+const title = isExtension ? 'New Tab' : 'Calculate your age';
+const favicon = './public/rho-pi.ico';
+const url = 'https://calculate-your-age.netlify.app';
+const ogImage =
+  'https://avatars1.githubusercontent.com/u/44445726?s=460&u=7226c3b6d6e2d2163dd0eab652c20aaba6775755&v=4';
+
+const htmlPlugin = new HtmlWebpackPlugin({
+  title,
+  favicon,
+  template: './public/index.html',
+  minify: {
+    removeComments: true,
+    collapseWhitespace: true,
+    minifyCSS: true,
+    minifyJS: true,
+  },
+  meta: {
+    viewport,
+    description,
+    author: 'Rofi',
+    image: ogImage,
+    keywords: `${keywords.join(', ')}, ${title}`,
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-title': name,
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    'apple-touch-icon': '/rho-pi.ico',
+    'application-name': name,
+    'theme-color': theme_color,
+    'msapplication-TileColor': theme_color,
+    'twitter:title': title,
+    'twitter:description': description,
+    'twitter:image': ogImage,
+    'twitter:creator': '@RofiSyahrul',
+    'twitter:dnt': 'on',
+    'twitter:card': 'summary_large_image',
+    ...(!isExtension && {
+      'google-site-verification':
+        'NUXK5NcVGFp_nAVVgvjMZYHSC2ZvTsva-XCCzJ85hvA',
+    }),
+  },
+  templateParameters: {
+    description,
+    title,
+    url,
+    ogImage,
+    favicon: '/rho-pi.ico',
+    themeColor: theme_color,
+  },
 });
 
-const optimizeCssPlugin = new OptimizeCSSAssetsPlugin({});
-
+/** @type {import('webpack').Configuration} */
 module.exports = {
-  optimization: {
-    minimizer: [uglifyjs, optimizeCssPlugin]
-  },
-  entry: ['babel-polyfill', './src/index.js'],
+  entry,
+  context: root,
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(tsx?)$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader']
-      },
-      {
-        test: /.(css|scss|sass)$/,
         use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
-        ]
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              context: root,
+            },
+          },
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['react-app', { flow: false, typescript: true }],
+              ],
+            },
+          },
+        ],
       },
       {
-        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: 'file-loader',
-        options: {
-          name: 'static/media/image/[ext]/[name].[ext]'
-        }
+        test: /\.(jsx?)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
       },
       {
-        test: /\.svg$/,
+        test: /\.(bmp|gif|jpe?g|png|svg)$/,
         loader: 'file-loader',
         options: {
-          name: 'static/media/image/svg/[name].[ext]'
-        }
+          name: 'static/media/image/[ext]/[name].[ext]',
+          esModule: false,
+        },
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        loader: 'file-loader?prefix=fonts/',
+        loader: 'file-loader',
         options: {
-          name: 'fonts/[name].[ext]'
-        }
+          prefix: 'fonts',
+          name: 'fonts/[name].[ext]',
+          esModule: false,
+        },
       },
-      {
-        test: /\.(graphql|gql)$/,
-        exclude: /node_modules/,
-        loader: 'graphql-tag/loader'
-      },
-      {
-        test: /\.md$/,
-        exclude: [/node_modules/, /readme/i],
-        use: ['html-loader', 'markdown-loader']
-      }
-    ]
+    ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.json'],
-    modules: [path.resolve(__dirname, '../src'), 'node_modules'],
-    alias: {
-      src: path.join(__dirname, '../src')
-    }
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    modules: [src, 'node_modules'],
+    alias,
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      title: 'New Tab',
-      template: './public/index.html'
-    }),
+    htmlPlugin,
     new webpack.DefinePlugin({
-      'process.env.APP_VERSION': JSON.stringify(
-        process.env.npm_package_version
-      )
+      __DEV__: process.env.NODE_ENV !== 'production',
+      APP_VERSION: JSON.stringify(process.env.npm_package_version),
+      IS_EXTENSION: isExtension,
     }),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css'
-    }),
-    new Critters({
-      preload: 'swap',
-      fonts: true
-    }),
-    new CopyWebpackPlugin([{ from: 'public' }])
+    new PreloadWebpackPlugin({ rel: 'preload', include: 'initial' }),
+    new ESLintPlugin({ extensions: ['.ts', '.tsx', '.js'] }),
   ],
   output: {
+    path: build,
     publicPath: '/',
     filename: 'js/bundle-[hash].js',
-    chunkFilename: 'js/[name].js'
-  }
+    chunkFilename: 'js/[name].js',
+  },
 };

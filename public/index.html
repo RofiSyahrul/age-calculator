@@ -2,55 +2,46 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="./rho-pi.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#366091" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="<%= favicon %>" />
+    <link rel="manifest" href="/manifest.json" />
+    <link key="canonical" rel="canonical" href="<%= url %>" />
+    <title><%= title %></title>
+
+    <base href="/" />
+    <link rel="apple-touch-icon" href="<%= favicon %>" />
+
+    <meta name="og:type" property="og:type" content="website" />
     <meta
-      name="description"
-      content="Web site created using create-react-app"
+      name="og:title"
+      property="og:title"
+      content="<%= title %>"
+    />
+    <meta
+      name="og:image"
+      property="og:image"
+      content="<%= ogImage %>"
+    />
+    <meta name="og:url" property="og:url" content="<%= url %>" />
+    <meta
+      name="og:description"
+      property="og:description"
+      content="<%= description %>"
     />
 
-    <link rel="manifest" href="./manifest.json" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
     <style>
       body {
         background-color: #151f22;
       }
-
-      .logo-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .logo {
-        height: 250px;
-        width: 250px;
-        background-image: url('/assets/manifest-icon-512.png');
-        background-repeat: no-repeat;
-        background-size: 100%;
-      }
-
-      #index {
-        width: 100vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
     </style>
   </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="index">
-      <div class="logo-container">
-        <div class="logo"></div>
-      </div>
+
+  <body class="content">
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="index" class="content">
+      <p style="display: none"><%= description %></p>
     </div>
   </body>
 </html>

@@ -1,12 +1,44 @@
-const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
+const isExtension = process.env.BUILD_ENV === 'extension';
+
+const terser = new TerserPlugin({
+  parallel: true,
+  sourceMap: false,
+  cache: true,
+  terserOptions: { output: { comments: false }, sourceMap: false },
+});
+
+const copy = new CopyWebpackPlugin({
+  patterns: [{ from: 'public' }],
+});
+
+const swPlugin = new WorkboxPlugin.GenerateSW({
+  swDest: 'sw.js',
+  clientsClaim: true,
+  skipWaiting: true,
+});
+
+function getPlugins() {
+  const plugins = [copy];
+  if (!isExtension) {
+    plugins.push(swPlugin);
+  }
+  return plugins;
+}
+
+/** @type {import('webpack').Configuration} */
 module.exports = {
   mode: 'production',
+  optimization: {
+    minimize: true,
+    minimizer: [terser],
+  },
+  plugins: getPlugins(),
   devServer: {
     contentBase: './build',
-    historyApiFallback: true
+    historyApiFallback: true,
   },
-  output: {
-    path: path.resolve(__dirname, '..', 'build')
-  }
 };

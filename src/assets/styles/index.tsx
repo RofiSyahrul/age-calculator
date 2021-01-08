@@ -7,12 +7,18 @@ const Styles = createGlobalStyle`
   ${GlobalCSS}
 `;
 
-const GlobalStyle = () => {
+const GlobalStyle: React.FC = () => {
   const {
-    states: { colors }
+    states: { colors, isReady },
   } = useAppContext();
 
-  return <Styles background={colors.background} />;
+  return (
+    <Styles
+      background={colors.background}
+      btnColor={colors.secondary}
+      isReady={isReady}
+    />
+  );
 };
 
 export default GlobalStyle;

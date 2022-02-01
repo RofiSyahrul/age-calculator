@@ -11,9 +11,10 @@ const BirthdatePicker: React.FC = () => {
     actions: { changeBirthDate },
   } = useAppContext();
 
-  const styles = useMemo(() => ({ style: { color: colors.white } }), [
-    colors,
-  ]);
+  const styles = useMemo(
+    () => ({ style: { color: colors.white } }),
+    [colors],
+  );
 
   return (
     <Box w my='xxs' fAlign='center' fJustify='center'>

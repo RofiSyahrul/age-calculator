@@ -15,7 +15,6 @@ module.exports = {
     'goods-ui/babel/preset',
   ],
   plugins: [
-    '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-syntax-optional-chaining',
     '@babel/plugin-proposal-optional-chaining',

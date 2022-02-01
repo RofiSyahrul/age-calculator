@@ -1,4 +1,5 @@
 import { css } from 'styled-components';
+
 import { colors, pickersWidth } from 'src/utils/constants';
 
 interface GlobalCssProps {

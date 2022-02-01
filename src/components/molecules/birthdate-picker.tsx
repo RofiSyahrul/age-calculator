@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
-import MuiPickersUtilsProvider from '@material-ui/pickers/MuiPickersUtilsProvider';
-import { DatePicker } from '@material-ui/pickers/DatePicker/DatePicker';
+
 import DayjsUtils from '@date-io/dayjs';
+import { DatePicker } from '@material-ui/pickers/DatePicker/DatePicker';
+import MuiPickersUtilsProvider from '@material-ui/pickers/MuiPickersUtilsProvider';
 import { Box } from 'goods-core';
+
 import { useAppContext } from 'src/context';
 
 const BirthdatePicker: React.FC = () => {

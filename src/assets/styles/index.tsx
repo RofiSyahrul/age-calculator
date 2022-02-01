@@ -1,6 +1,9 @@
 import React from 'react';
+
 import { createGlobalStyle } from 'styled-components';
+
 import { useAppContext } from 'src/context';
+
 import GlobalCSS from './global';
 
 const Styles = createGlobalStyle`

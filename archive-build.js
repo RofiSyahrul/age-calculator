@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
+
 const archiver = require('archiver');
+
 const { name, version } = require('./package.json');
 
 function removeExistingTargetZip() {

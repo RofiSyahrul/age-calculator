@@ -1,5 +1,6 @@
 /* global chrome  */
 import dayjs from 'dayjs';
+
 import { defaultDob, timeUnits } from './constants';
 
 export function getLocalStorage(key = ''): Promise<string> {

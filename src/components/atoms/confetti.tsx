@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import ConfettiComponent from 'react-confetti';
 
 const Confetti: React.FC = () => {

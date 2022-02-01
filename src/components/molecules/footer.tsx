@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Box, Text } from 'goods-core';
+
 import { useAppContext } from 'src/context';
 import { pickersWidth } from 'src/utils/constants';
 

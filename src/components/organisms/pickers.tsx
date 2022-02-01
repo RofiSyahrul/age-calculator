@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Box, Icon } from 'goods-core';
+
 import BirthdatePicker from '@molecules/birthdate-picker';
 import ColorPicker from '@molecules/color-picker';
 import { useAppContext } from 'src/context';

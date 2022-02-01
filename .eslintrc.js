@@ -45,6 +45,30 @@ module.exports = {
         amd: true,
       },
     ],
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal'],
+        pathGroups: [
+          {
+            group: 'external',
+            pattern: '{react,react-dom}',
+            position: 'before'
+          },
+          {
+            pattern: '{src/**,@atoms/**,@molecules/**,@organisms/**}',
+            group: 'external',
+            position: 'after'
+          }
+        ],
+        pathGroupsExcludedImportTypes: ['react'],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true
+        }
+      }
+    ],
     camelcase: 'off',
     'array-callback-return': 0,
     'consistent-return': 0,
@@ -130,6 +154,7 @@ module.exports = {
         'react/require-default-props': 0,
         'react/jsx-indent': 'off',
         'react/no-danger': 'off',
+        '@typescript-eslint/consistent-type-imports': 'error',
         '@typescript-eslint/indent': 'off',
         '@typescript-eslint/no-unsafe-return': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',

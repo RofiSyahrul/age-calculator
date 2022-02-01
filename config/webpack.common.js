@@ -1,8 +1,9 @@
-const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
+const webpack = require('webpack');
+
 const { alias, entry, root, src, build } = require('../.paths');
 const { keywords } = require('../package.json');
 const {

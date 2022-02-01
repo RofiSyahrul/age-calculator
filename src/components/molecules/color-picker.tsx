@@ -7,9 +7,12 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
-import { ColorChangeHandler, SketchPicker } from 'react-color';
+
 import { Box, Text } from 'goods-core';
 import { Button } from 'goods-ui';
+import type { ColorChangeHandler } from 'react-color';
+import { SketchPicker } from 'react-color';
+
 import { useAppContext } from 'src/context';
 
 const shadow =

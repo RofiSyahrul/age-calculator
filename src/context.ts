@@ -7,17 +7,19 @@ import {
   useReducer,
   useMemo,
 } from 'react';
+
+import type { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import { produce } from 'immer';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+
+import {
+  defaultDob,
+  colors as defaultColors,
+} from './utils/constants';
 import {
   getDob,
   setLocalStorage,
   getLocalStorage,
 } from './utils/helpers';
-import {
-  defaultDob,
-  colors as defaultColors,
-} from './utils/constants';
 
 type State = {
   isReady: boolean;

@@ -1,17 +1,20 @@
 import React from 'react';
-import { DefaultTheme } from 'styled-components';
+
 import {
   Box,
   GoodsProvider,
   overrideGoodsTheme,
   Spinner,
 } from 'goods-core';
+import type { DefaultTheme } from 'styled-components';
+
 import SettingButton from '@atoms/setting-button';
 import Footer from '@molecules/footer';
 import Age from '@organisms/age';
 import Pickers from '@organisms/pickers';
-import { useAppState, AppContext, useAppContext } from './context';
+
 import GlobalStyles from './assets/styles';
+import { useAppState, AppContext, useAppContext } from './context';
 import { pickersWidth, shadow } from './utils/constants';
 
 const fontBase = [

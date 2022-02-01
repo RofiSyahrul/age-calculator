@@ -1,8 +1,10 @@
 import React from 'react';
-import { Button } from 'goods-ui';
+
 import { Settings } from '@material-ui/icons';
-import { useAppContext } from 'src/context';
 import { mergeClass } from 'goods-core';
+import { Button } from 'goods-ui';
+
+import { useAppContext } from 'src/context';
 
 const SettingButton: React.FC = () => {
   const {

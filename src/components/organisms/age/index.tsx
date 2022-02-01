@@ -1,8 +1,11 @@
 import React from 'react';
+
 import { Box, Text } from 'goods-core';
+
 import Confetti from '@atoms/confetti';
 import TimeUnit from '@molecules/time-unit';
 import { timeUnits } from 'src/utils/constants';
+
 import { useAge } from './age.hook';
 
 const Age: React.FC = () => {

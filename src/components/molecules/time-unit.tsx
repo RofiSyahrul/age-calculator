@@ -1,7 +1,9 @@
 import React, { memo } from 'react';
+
 import { Box, mergeClass, Text } from 'goods-core';
-import { shadow } from 'src/utils/constants';
+
 import { useAppContext } from 'src/context';
+import { shadow } from 'src/utils/constants';
 
 interface TimeUnitProps {
   value?: number;

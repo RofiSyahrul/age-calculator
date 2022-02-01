@@ -28,7 +28,7 @@
     "dayjs": "^1.9.8",
     "goods-core": "^1.6.15",
     "goods-ui": "^1.10.10",
-    "immer": "^9.0.6",
+    "immer": "^9.0.12",
     "react": "^17.0.1",
     "react-color": "^2.19.3",
     "react-confetti": "^6.0.0",

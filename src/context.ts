@@ -7,7 +7,7 @@ import {
   useReducer,
   useMemo,
 } from 'react';
-import produce from 'immer';
+import { produce } from 'immer';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import {
   getDob,

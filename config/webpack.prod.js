@@ -12,7 +12,12 @@ const terser = new TerserPlugin({
 });
 
 const copy = new CopyWebpackPlugin({
-  patterns: [{ from: 'public' }],
+  patterns: [
+    {
+      from: 'public',
+      filter: filePath => !filePath.endsWith('index.html'),
+    },
+  ],
 });
 
 const swPlugin = new WorkboxPlugin.GenerateSW({

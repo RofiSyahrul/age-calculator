@@ -136,7 +136,7 @@ module.exports = {
   output: {
     path: build,
     publicPath: '/',
-    filename: 'js/bundle-[hash].js',
+    filename: 'js/[name]-[hash].js',
     chunkFilename: 'js/[name].js',
   },
 };

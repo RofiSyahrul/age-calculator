@@ -80,7 +80,6 @@ module.exports = {
         'plugin:import/typescript',
         'airbnb-typescript',
         'plugin:@typescript-eslint/recommended',
-        'prettier/@typescript-eslint',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
       ],
       rules: {
@@ -131,6 +130,7 @@ module.exports = {
         'react/require-default-props': 0,
         'react/jsx-indent': 'off',
         'react/no-danger': 'off',
+        '@typescript-eslint/indent': 'off',
         '@typescript-eslint/no-unsafe-return': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',
@@ -219,10 +219,11 @@ module.exports = {
     },
     {
       files: ['**/*.js', '*.js'],
-      parser: 'babel-eslint',
+      parser: '@babel/eslint-parser',
       parserOptions: {
-        parser: 'babel-eslint',
+        parser: '@babel/eslint-parser',
         project: './tsconfig.json',
+        requireConfigFile: false,
       },
       extends: [
         'plugin:import/errors',

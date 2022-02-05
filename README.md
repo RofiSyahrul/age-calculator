@@ -2,7 +2,7 @@
 
 Age Calculator and Updater as chrome extension to override new tab page (chrome://newtab)
 
-[Live demo](https://calculate-your-age.netlify.com)
+[Live demo](https://age.rofi.link)
 
 [Chrome extension in chrome webstore][2]
 

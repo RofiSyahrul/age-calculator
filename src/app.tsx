@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 
 import {
   Box,
@@ -10,12 +10,13 @@ import type { DefaultTheme } from 'styled-components';
 
 import SettingButton from '@atoms/setting-button';
 import Footer from '@molecules/footer';
-import Age from '@organisms/age';
-import Pickers from '@organisms/pickers';
 
 import GlobalStyles from './assets/styles';
 import { useAppState, AppContext, useAppContext } from './context';
 import { pickersWidth, shadow } from './utils/constants';
+
+const Age = lazy(() => import('@organisms/age'));
+const Pickers = lazy(() => import('@organisms/pickers'));
 
 const fontBase = [
   '-apple-system',
@@ -54,8 +55,10 @@ const Main: React.FC = () => {
         posi='relative'
         transition='inherit'
       >
-        <Pickers />
-        <Age />
+        <Suspense fallback={<Spinner s='150px' />}>
+          <Pickers />
+          <Age />
+        </Suspense>
       </Box>
     );
   }

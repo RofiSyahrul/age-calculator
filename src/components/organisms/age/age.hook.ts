@@ -84,13 +84,16 @@ const reducer = produce((draft: State, action: Action) => {
 type HookReturn = {
   age: Age;
   colors: Colors;
+  confettiLive: number;
   isPickerShown: boolean;
 };
 
 export const useAge = (): HookReturn => {
   const {
-    states: { birthDate, colors, isPickerShown },
+    states: { birthDate, colors, isPickerShown, specialSetting },
   } = useAppContext();
+
+  const { confettiLive } = specialSetting || {};
 
   const [{ age }, dispatch] = useReducer(
     reducer,
@@ -112,5 +115,11 @@ export const useAge = (): HookReturn => {
     };
   }, []);
 
-  return { age, colors, isPickerShown };
+  return {
+    age,
+    colors,
+    isPickerShown,
+    confettiLive:
+      confettiLive && confettiLive >= 1 ? confettiLive : 1,
+  };
 };

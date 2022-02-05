@@ -1,4 +1,5 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+require('dotenv').config();
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
@@ -6,11 +7,38 @@ const webpack = require('webpack');
 
 const { alias, entry, root, src, build } = require('../.paths');
 const { keywords } = require('../package.json');
-const {
-  name,
-  description,
-  theme_color,
-} = require('../public/manifest.json');
+const { manifest } = require('./config');
+
+const { name, description, theme_color } = manifest;
+
+function parseSpecialEnv() {
+  const specialStr = process.env.SPECIAL;
+  if (!specialStr) return {};
+
+  const specials = specialStr.split(',');
+  const special = {};
+  specials.forEach(spec => {
+    const [
+      name,
+      dob,
+      primary,
+      secondary,
+      background,
+      white,
+      confettiLive,
+    ] = spec.split('*');
+    special[name] = {
+      dob: JSON.stringify(dob || '1997-06-18T00:00:00+07:00'),
+      primary: JSON.stringify(`#${primary || '366091'}`),
+      secondary: JSON.stringify(`#${secondary || '4aabc5'}`),
+      background: JSON.stringify(`#${background || '151f22'}`),
+      white: JSON.stringify(`#${white || 'daecf2'}`),
+      confettiLive: confettiLive || '1',
+    };
+  });
+
+  return special;
+}
 
 const isExtension = process.env.BUILD_ENV === 'extension';
 const viewport =
@@ -130,6 +158,7 @@ module.exports = {
       __DEV__: process.env.NODE_ENV !== 'production',
       APP_VERSION: JSON.stringify(process.env.npm_package_version),
       IS_EXTENSION: isExtension,
+      SPECIAL: parseSpecialEnv(),
     }),
     new PreloadWebpackPlugin({ rel: 'preload', include: 'initial' }),
     new ESLintPlugin({ extensions: ['.ts', '.tsx', '.js'] }),

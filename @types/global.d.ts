@@ -6,6 +6,7 @@ declare global {
   const __DEV__: boolean;
   const APP_VERSION: string;
   const IS_EXTENSION: boolean;
+  const SPECIAL: Special;
 
   namespace NodeJS {
     interface ProcessEnv {
@@ -34,4 +35,11 @@ declare global {
   };
 
   type AgeKey = keyof Omit<Age, 'rem'>;
+
+  interface Setting extends Colors {
+    dob: string;
+    confettiLive: number;
+  }
+
+  type Special = Record<string, Setting>;
 }

@@ -31,7 +31,12 @@ export function setLocalStorage(
   });
 }
 
-// export function isColorHex()
+export function getSpecialSetting(): Setting | null {
+  const qs = new URLSearchParams(window.location.search);
+  const name = qs.get('untuk');
+  if (!name) return null;
+  return SPECIAL[name] ?? null;
+}
 
 export async function getDob(): Promise<string> {
   const dob = await getLocalStorage('dob');

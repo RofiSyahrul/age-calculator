@@ -137,6 +137,7 @@ module.exports = {
         'jsx-quotes': ['error', 'prefer-single'],
         'arrow-body-style': 'off',
         'global-require': 0,
+        'no-console': 'warn',
         'no-underscore-dangle': 'off',
         'no-restricted-syntax': 'off',
         'no-param-reassign': 'off',

@@ -2,8 +2,10 @@ const fs = require('fs');
 const path = require('path');
 
 const archiveBuild = require('./archive-build');
-const { icons } = require('./public/manifest.json');
+const { manifest: manifestConfig } = require('./config/config');
 const updateReadme = require('./update-readme');
+
+const { icons } = manifestConfig;
 
 if (!fs.existsSync('./build')) {
   fs.mkdirSync('./build');

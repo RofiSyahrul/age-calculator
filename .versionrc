@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "type": "feat",
+      "section": "Features"
+    },
+    {
+      "type": "fix",
+      "section": "Bug Fixes"
+    },
+    {
+      "type": "test",
+      "section": "Tests"
+    },
+    {
+      "type": "build",
+      "section": "Improvements"
+    },
+    {
+      "type": "docs",
+      "section": "Docs"
+    },
+    {
+      "type": "style",
+      "section": "Improvements"
+    },
+    {
+      "type": "refactor",
+      "section": "Improvements"
+    },
+    {
+      "type": "perf",
+      "section": "Improvements"
+    },
+    {
+      "type": "chore",
+      "hidden": true
+    }
+  ]
+}

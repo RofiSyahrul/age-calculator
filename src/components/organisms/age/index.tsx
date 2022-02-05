@@ -24,7 +24,7 @@ const Age: React.FC = () => {
       tProperty='opacity'
       className={isPickerShown ? 'with-picker' : ''}
     >
-      {age.month === 0 && age.day && age.day < confettiLive && (
+      {age.month === 0 && age.day != null && age.day < confettiLive && (
         <Suspense fallback={<div style={{ position: 'fixed' }} />}>
           <Confetti />
         </Suspense>

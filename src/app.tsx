@@ -42,7 +42,7 @@ const theme: DefaultTheme = {
 
 const Main: React.FC = () => {
   const {
-    states: { isPickerShown, isReady },
+    states: { isPickerShown, isReady, specialSetting },
   } = useAppContext();
 
   if (isReady) {
@@ -56,7 +56,7 @@ const Main: React.FC = () => {
         transition='inherit'
       >
         <Suspense fallback={<Spinner s='150px' />}>
-          <Pickers />
+          {!specialSetting && <Pickers />}
           <Age />
         </Suspense>
       </Box>
@@ -72,7 +72,7 @@ export default function App(): JSX.Element {
     <AppContext.Provider value={{ states, actions }}>
       <GoodsProvider noGlobalStyle theme={theme}>
         <GlobalStyles />
-        <SettingButton />
+        {!states.specialSetting && <SettingButton />}
         <Main />
         <Footer />
       </GoodsProvider>

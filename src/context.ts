@@ -119,6 +119,7 @@ const reducer = produce(
           draft.colors.secondary = secondary;
           draft.colors.background = background;
           draft.colors.white = white;
+          draft.isPickerShown = false;
         }
         draft.isReady = true;
         return;

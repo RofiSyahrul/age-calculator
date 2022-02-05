@@ -17,4 +17,4 @@ How to use this extension (**locally**):
 7. Done. This extension has been installed in your chrome. Open new tab to check.
 
 [1]: ../../raw/master/age-calculator-2-0-1.zip
-[2]: https://chrome.google.com/webstore/detail/age-calculator-and-update/olndgnldoobcecnijailjdekbcpfgfeh
+[2]: https://rofi.link/age-calc

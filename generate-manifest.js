@@ -1,13 +1,10 @@
 const fs = require('fs');
+
+const { manifest } = require('./config/config');
 const packageJson = require('./package.json');
-const manifestJson = require('./public/manifest.json');
 
 const { version } = packageJson;
-const jsonContent = JSON.stringify(
-  { ...manifestJson, version },
-  null,
-  2,
-);
+const jsonContent = JSON.stringify({ ...manifest, version }, null, 2);
 
 if (!fs.existsSync('./public')) {
   fs.mkdirSync('./public');

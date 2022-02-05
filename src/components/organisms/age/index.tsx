@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 
 import { Box, Text } from 'goods-core';
 
-import Confetti from '@atoms/confetti';
 import TimeUnit from '@molecules/time-unit';
 import { timeUnits } from 'src/utils/constants';
 
 import { useAge } from './age.hook';
 
+const Confetti = lazy(() => import('@atoms/confetti'));
+
 const Age: React.FC = () => {
-  const { age, colors, isPickerShown } = useAge();
+  const { age, colors, confettiLive, isPickerShown } = useAge();
 
   return (
     <Box
@@ -23,7 +24,11 @@ const Age: React.FC = () => {
       tProperty='opacity'
       className={isPickerShown ? 'with-picker' : ''}
     >
-      {age.month === 0 && age.day === 0 && <Confetti />}
+      {age.month === 0 && age.day && age.day < confettiLive && (
+        <Suspense fallback={<div style={{ position: 'fixed' }} />}>
+          <Confetti />
+        </Suspense>
+      )}
       <Text
         as='h1'
         fSize={{

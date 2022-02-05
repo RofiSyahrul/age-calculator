@@ -3,6 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const isExtension = process.env.BUILD_ENV === 'extension';
+const isAnalyze = process.env.ANALYZE === 'true';
 
 const terser = new TerserPlugin({
   parallel: true,
@@ -30,6 +31,11 @@ function getPlugins() {
   const plugins = [copy];
   if (!isExtension) {
     plugins.push(swPlugin);
+  }
+  if (isAnalyze) {
+    const BundleAnalyzerPlugin =
+      require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+    plugins.push(new BundleAnalyzerPlugin());
   }
   return plugins;
 }

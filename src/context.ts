@@ -19,6 +19,7 @@ import {
   getDob,
   setLocalStorage,
   getLocalStorage,
+  getSpecialSetting,
 } from './utils/helpers';
 
 type State = {
@@ -27,11 +28,16 @@ type State = {
   birthDate: string | Date;
   colors: Colors;
   totalOpened: number;
+  specialSetting: Setting | null;
 };
 
 type ReducerState = Pick<
   State,
-  'isReady' | 'birthDate' | 'colors' | 'isPickerShown'
+  | 'isReady'
+  | 'birthDate'
+  | 'colors'
+  | 'isPickerShown'
+  | 'specialSetting'
 >;
 
 type InitializeStateAction = {
@@ -39,6 +45,11 @@ type InitializeStateAction = {
   payload: {
     list: string[];
   };
+};
+
+type SetSpecialSettingAction = {
+  type: 'SET_SPECIAL_SETTING';
+  payload: Setting;
 };
 
 type ChangeBirthDateAction = {
@@ -62,6 +73,7 @@ type TogglePickerAction = {
 
 type ReducerAction =
   | InitializeStateAction
+  | SetSpecialSettingAction
   | ChangeBirthDateAction
   | ChangeColorAction
   | SaveChangeColorAction
@@ -81,6 +93,7 @@ const initialState: ReducerState = {
   isPickerShown: window.innerWidth >= 768,
   birthDate: defaultDob,
   colors: defaultColors,
+  specialSetting: null,
 };
 
 const reducer = produce(
@@ -93,6 +106,19 @@ const reducer = produce(
           colors.forEach((color, i) => {
             if (color) draft.colors[keys[i]] = color;
           });
+        }
+        draft.isReady = true;
+        return;
+      case 'SET_SPECIAL_SETTING':
+        if (action.payload) {
+          const { dob, primary, secondary, background, white } =
+            action.payload;
+          draft.specialSetting = action.payload;
+          draft.birthDate = dob;
+          draft.colors.primary = primary;
+          draft.colors.secondary = secondary;
+          draft.colors.background = background;
+          draft.colors.white = white;
         }
         draft.isReady = true;
         return;
@@ -143,6 +169,7 @@ type Context = {
 export const useAppState = (): Context => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [totalOpened, setTotalOpened] = useState(0);
+  const { specialSetting } = state;
 
   const changeBirthDate = useCallback<Action['changeBirthDate']>(
     date => {
@@ -167,10 +194,15 @@ export const useAppState = (): Context => {
 
   const cancelChangeColor = useCallback<Action['cancelChangeColor']>(
     async key => {
-      const value = await getLocalStorage(key);
+      let value = specialSetting?.[key];
+      if (value) {
+        previewColor(key, value);
+        return;
+      }
+      value = await getLocalStorage(key);
       previewColor(key, value || defaultColors[key]);
     },
-    [],
+    [specialSetting],
   );
 
   const togglePicker = useCallback(() => {
@@ -193,12 +225,20 @@ export const useAppState = (): Context => {
   );
 
   useEffect(() => {
-    Promise.all(promises).then(results => {
+    const special = IS_EXTENSION ? null : getSpecialSetting();
+    if (special) {
       dispatch({
-        type: 'INITIALIZE_STATE',
-        payload: { list: results },
+        type: 'SET_SPECIAL_SETTING',
+        payload: special,
       });
-    });
+    } else {
+      Promise.all(promises).then(results => {
+        dispatch({
+          type: 'INITIALIZE_STATE',
+          payload: { list: results },
+        });
+      });
+    }
   }, []);
 
   return contextValue;

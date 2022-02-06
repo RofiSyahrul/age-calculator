@@ -14,7 +14,7 @@ const Anchor = styled.a`
 
 const Footer: React.FC = () => {
   const {
-    states: { colors, isPickerShown },
+    states: { colors, isPickerShown, specialSetting },
   } = useAppContext();
 
   return (
@@ -48,15 +48,17 @@ const Footer: React.FC = () => {
         </Anchor>
         {'.'}
       </Text>
-      <Text
-        as='span'
-        c={colors.white}
-        fSize={{ xs: '14px', sm: '20px' }}
-        lineHeight='1.3em'
-        textAlign='center'
-      >
-        {`v${APP_VERSION}`}
-      </Text>
+      {!specialSetting && (
+        <Text
+          as='span'
+          c={colors.white}
+          fSize={{ xs: '14px', sm: '20px' }}
+          lineHeight='1.3em'
+          textAlign='center'
+        >
+          {`v${APP_VERSION}`}
+        </Text>
+      )}
     </Box>
   );
 };

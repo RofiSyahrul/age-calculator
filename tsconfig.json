@@ -31,7 +31,12 @@
     "removeComments": false,
     "typeRoots": ["./@types", "./node_modules/@types"]
   },
-  "include": ["./src/*", "./src/**/*", "./@types/*"],
+  "include": [
+    "./config/**/*.ts",
+    "./src/*",
+    "./src/**/*",
+    "./@types/*"
+  ],
   "exclude": [
     "node_modules",
     "./node_modules",

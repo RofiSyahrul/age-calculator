@@ -39,6 +39,7 @@ declare global {
   interface Setting extends Colors {
     dob: string;
     confettiLive: number;
+    runningTexts: string[];
   }
 
   type Special = Record<string, Setting>;

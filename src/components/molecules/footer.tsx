@@ -1,9 +1,16 @@
 import React from 'react';
 
 import { Box, Text } from 'goods-core';
+import styled from 'styled-components';
 
 import { useAppContext } from 'src/context';
 import { pickersWidth } from 'src/utils/constants';
+
+const Anchor = styled.a`
+  color: inherit;
+  text-decoration-thickness: 1.5px;
+  text-decoration-style: wavy;
+`;
 
 const Footer: React.FC = () => {
   const {
@@ -35,7 +42,11 @@ const Footer: React.FC = () => {
         lineHeight='1.3em'
         textAlign='center'
       >
-        {`Copyright © ${new Date().getFullYear()} S. Rofi.`}
+        {`Copyright © ${new Date().getFullYear()} `}
+        <Anchor href={REPOSITORY_URL} target='_blank'>
+          Rofi
+        </Anchor>
+        {'.'}
       </Text>
       <Text
         as='span'

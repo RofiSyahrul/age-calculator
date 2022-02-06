@@ -6,7 +6,7 @@ import { DefinePlugin } from 'webpack';
 import type { Configuration } from 'webpack';
 
 import { alias, entry, root, src, build } from '../.paths';
-import { keywords } from '../package.json';
+import pkg from '../package.json';
 import { manifest } from './config';
 import { fetchSpecialData } from './supabase';
 
@@ -37,7 +37,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
     description,
     author: 'Rofi',
     image: ogImage,
-    keywords: `${keywords.join(', ')}, ${title}`,
+    keywords: `${pkg.keywords.join(', ')}, ${title}`,
     'mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-title': name,
@@ -128,6 +128,7 @@ const commonConfig = async (): Promise<Configuration> => ({
     new DefinePlugin({
       __DEV__: process.env.NODE_ENV !== 'production',
       APP_VERSION: JSON.stringify(process.env.npm_package_version),
+      REPOSITORY_URL: JSON.stringify(pkg.repository.url),
       IS_EXTENSION: isExtension,
       SPECIAL: (await fetchSpecialData()) as never,
     }),

@@ -5,6 +5,7 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const __DEV__: boolean;
   const APP_VERSION: string;
+  const REPOSITORY_URL: string;
   const IS_EXTENSION: boolean;
   const SPECIAL: Special;
 

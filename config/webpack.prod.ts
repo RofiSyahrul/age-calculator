@@ -1,6 +1,10 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+/* eslint-disable import/default */
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import type { Configuration, WebpackPluginInstance } from 'webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import WorkboxPlugin from 'workbox-webpack-plugin';
+import 'webpack-dev-server';
 
 const isExtension = process.env.BUILD_ENV === 'extension';
 const isAnalyze = process.env.ANALYZE === 'true';
@@ -12,11 +16,12 @@ const terser = new TerserPlugin({
   terserOptions: { output: { comments: false }, sourceMap: false },
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 const copy = new CopyWebpackPlugin({
   patterns: [
     {
       from: 'public',
-      filter: filePath => !filePath.endsWith('index.html'),
+      filter: (filePath: string) => !filePath.endsWith('index.html'),
     },
   ],
 });
@@ -28,28 +33,26 @@ const swPlugin = new WorkboxPlugin.GenerateSW({
 });
 
 function getPlugins() {
-  const plugins = [copy];
+  const plugins: WebpackPluginInstance[] = [copy];
   if (!isExtension) {
     plugins.push(swPlugin);
   }
   if (isAnalyze) {
-    const BundleAnalyzerPlugin =
-      require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
     plugins.push(new BundleAnalyzerPlugin());
   }
   return plugins;
 }
 
-/** @type {import('webpack').Configuration} */
-module.exports = {
+const prodConfig: Configuration = {
   mode: 'production',
   optimization: {
     minimize: true,
-    minimizer: [terser],
+    minimizer: [terser as WebpackPluginInstance],
   },
   plugins: getPlugins(),
   devServer: {
-    contentBase: './build',
     historyApiFallback: true,
   },
 };
+
+export default prodConfig;

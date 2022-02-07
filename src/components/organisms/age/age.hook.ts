@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useMemo, useReducer } from 'react';
 
 import { produce } from 'immer';
 import isEqual from 'react-fast-compare';
@@ -84,22 +84,47 @@ const reducer = produce((draft: State, action: Action) => {
 type HookReturn = {
   age: Age;
   colors: Colors;
-  confettiLive: number;
+  isBirthdayParty: boolean;
   isPickerShown: boolean;
+  runningTexts: string[];
 };
+
+function parseRunningText(rawText: string, year?: number) {
+  if (!rawText.includes('${year}')) return rawText;
+  return rawText.replace(/\$\{year\}/g, (year ?? '').toString());
+}
 
 export const useAge = (): HookReturn => {
   const {
     states: { birthDate, colors, isPickerShown, specialSetting },
   } = useAppContext();
 
-  const { confettiLive } = specialSetting || {};
+  const { confettiLive, runningTexts } = specialSetting || {};
 
   const [{ age }, dispatch] = useReducer(
     reducer,
     birthDate,
     initializeState,
   );
+
+  const isBirthdayParty = useMemo(() => {
+    if (
+      typeof confettiLive !== 'number' ||
+      confettiLive < 1 ||
+      typeof age.day !== 'number'
+    ) {
+      return age.month === 0 && age.day === 0;
+    }
+
+    return age.month === 0 && age.day < confettiLive;
+  }, [confettiLive, age.month, age.day]);
+
+  const parsedRunningTexts = useMemo(() => {
+    if (!runningTexts) return [];
+    return runningTexts.map(rawText =>
+      parseRunningText(rawText, age.year),
+    );
+  }, [runningTexts, age.year]);
 
   useEffect(() => {
     dispatch({ type: 'CHANGE_BIRTH_DATE', payload: { birthDate } });
@@ -118,8 +143,8 @@ export const useAge = (): HookReturn => {
   return {
     age,
     colors,
+    isBirthdayParty,
     isPickerShown,
-    confettiLive:
-      confettiLive && confettiLive >= 1 ? confettiLive : 1,
+    runningTexts: parsedRunningTexts,
   };
 };

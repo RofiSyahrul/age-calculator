@@ -1,6 +1,6 @@
 {
   "name": "age-calculator",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Age Calculator and Updater as Chrome Extension by Rofi",
   "sideEffects": false,
   "scripts": {
@@ -11,7 +11,7 @@
     "build": "yarn build:base",
     "analyze": "ANALYZE=true yarn build:base",
     "build:extension": "yarn prebuild && BUILD_ENV=extension yarn build:base && node after-build",
-    "release": "standard-version --no-verify",
+    "release": "standard-version --no-verify && yarn build:extension && git add . && git commit -m \"chore: update archived build\" --no-verify",
     "lint-fix": "eslint . --ext .js,.jsx,.tsx,.ts -f table --fix; exit 0"
   },
   "keywords": [

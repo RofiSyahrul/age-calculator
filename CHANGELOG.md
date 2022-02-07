@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/RofiSyahrul/age-calculator/compare/v2.1.1...v2.2.0) (2022-02-07)
+
+
+### Features
+
+* add running text for special birthday party ([27242de](https://github.com/RofiSyahrul/age-calculator/commit/27242dee664ff4453d80d89cf8a1a05bde026578))
+* expose repository URL through footer ([adbb20b](https://github.com/RofiSyahrul/age-calculator/commit/adbb20b7cfba68a6aa94c387fbcaa463bc1cca8d))
+* hide app version if special setting is available ([ff31e81](https://github.com/RofiSyahrul/age-calculator/commit/ff31e811ba668f77692f5cce7e201aef5d148f66))
+
+
+### Improvements
+
+* load special setting from supabase and use ts in webpack config files ([2c3d6c7](https://github.com/RofiSyahrul/age-calculator/commit/2c3d6c7e4b08530c47d1d1a6bbfc7eced2bd0f44))
+
 ### 2.1.1 (2022-02-05)
 
 

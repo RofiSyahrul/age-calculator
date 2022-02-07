@@ -8,9 +8,16 @@ import { timeUnits } from 'src/utils/constants';
 import { useAge } from './age.hook';
 
 const Confetti = lazy(() => import('@atoms/confetti'));
+const RunningText = lazy(() => import('@molecules/running-text'));
 
 const Age: React.FC = () => {
-  const { age, colors, confettiLive, isPickerShown } = useAge();
+  const {
+    age,
+    colors,
+    isBirthdayParty,
+    isPickerShown,
+    runningTexts,
+  } = useAge();
 
   return (
     <Box
@@ -24,7 +31,7 @@ const Age: React.FC = () => {
       tProperty='opacity'
       className={isPickerShown ? 'with-picker' : ''}
     >
-      {age.month === 0 && age.day != null && age.day < confettiLive && (
+      {isBirthdayParty && (
         <Suspense fallback={<div style={{ position: 'fixed' }} />}>
           <Confetti />
         </Suspense>
@@ -68,6 +75,11 @@ const Age: React.FC = () => {
           <TimeUnit key={unit} value={age[unit]} unit={unit} />
         ))}
       </Box>
+      {isBirthdayParty && runningTexts.length > 0 && (
+        <Suspense fallback={<div />}>
+          <RunningText texts={runningTexts} />
+        </Suspense>
+      )}
     </Box>
   );
 };

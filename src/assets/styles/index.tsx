@@ -15,13 +15,7 @@ const GlobalStyle: React.FC = () => {
     states: { colors, isReady },
   } = useAppContext();
 
-  return (
-    <Styles
-      background={colors.background}
-      btnColor={colors.secondary}
-      isReady={isReady}
-    />
-  );
+  return <Styles isReady={isReady} colors={colors} />;
 };
 
 export default GlobalStyle;

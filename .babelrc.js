@@ -11,8 +11,6 @@ module.exports = {
     ],
     '@babel/preset-react',
     '@babel/preset-typescript',
-    'goods-core/babel/preset',
-    'goods-ui/babel/preset',
   ],
   plugins: [
     '@babel/plugin-syntax-dynamic-import',
@@ -27,15 +25,6 @@ module.exports = {
         camel2DashComponentName: false,
       },
       'core',
-    ],
-    [
-      'babel-plugin-import',
-      {
-        libraryName: '@material-ui/icons',
-        libraryDirectory: 'esm',
-        camel2DashComponentName: false,
-      },
-      'icons',
     ],
     [
       'module-resolver',

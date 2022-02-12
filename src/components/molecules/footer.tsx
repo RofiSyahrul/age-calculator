@@ -1,10 +1,48 @@
 import React from 'react';
 
-import { Box, Text } from 'goods-core';
 import styled from 'styled-components';
 
 import { useAppContext } from 'src/context';
+import colorVars from 'src/utils/color-vars';
 import { pickersWidth } from 'src/utils/constants';
+
+const FooterWrapper = styled.footer`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 100%;
+  transition: inherit;
+  transition-property: width, opacity;
+
+  width: 100%;
+  margin-top: 1rem;
+
+  &.with-picker {
+    width: calc(100% - ${pickersWidth});
+    opacity: 1;
+
+    ${props => props.theme.breakpoint.lg} {
+      margin-top: 0rem;
+    }
+
+    ${props => props.theme.breakpoint.sm} {
+      opacity: 0;
+    }
+  }
+`;
+
+const Text = styled.span`
+  font-size: 1.25rem;
+  line-height: 1.3em;
+  text-align: center;
+  color: ${colorVars.white};
+
+  ${props => props.theme.breakpoint.xs} {
+    font-size: 0.875rem;
+  }
+`;
 
 const Anchor = styled.a`
   color: inherit;
@@ -12,55 +50,21 @@ const Anchor = styled.a`
   text-decoration-style: wavy;
 `;
 
-const Footer: React.FC = () => {
+export default function Footer() {
   const {
-    states: { colors, isPickerShown, specialSetting },
+    states: { isPickerShown, specialSetting },
   } = useAppContext();
 
   return (
-    <Box
-      as='footer'
-      posi='absolute'
-      top='100%'
-      fAlign='center'
-      fJustify='center'
-      transition='inherit'
-      tProperty='width, opacity'
-      className={isPickerShown ? 'with-picker' : ''}
-      {...(isPickerShown
-        ? {
-            w: `calc(100% - ${pickersWidth})`,
-            opacity: { xs: 0, md: 1 },
-            mt: { xs: '0', lg: 's' },
-          }
-        : { w: '100%', mt: 's' })}
-    >
-      <Text
-        as='span'
-        c={colors.white}
-        fSize={{ xs: '14px', sm: '20px' }}
-        lineHeight='1.3em'
-        textAlign='center'
-      >
+    <FooterWrapper className={isPickerShown ? 'with-picker' : ''}>
+      <Text>
         {`Copyright © ${new Date().getFullYear()} `}
         <Anchor href={REPOSITORY_URL} target='_blank'>
           Rofi
         </Anchor>
         {'.'}
       </Text>
-      {!specialSetting && (
-        <Text
-          as='span'
-          c={colors.white}
-          fSize={{ xs: '14px', sm: '20px' }}
-          lineHeight='1.3em'
-          textAlign='center'
-        >
-          {`v${APP_VERSION}`}
-        </Text>
-      )}
-    </Box>
+      {!specialSetting && <Text>{`v${APP_VERSION}`}</Text>}
+    </FooterWrapper>
   );
-};
-
-export default Footer;
+}

@@ -1,18 +1,17 @@
 import React from 'react';
 
-import { createMediaQuery } from 'goods-core';
 import styled, { keyframes } from 'styled-components';
 
-import { useAppContext } from 'src/context';
+import colorVars from 'src/utils/color-vars';
 
 interface RunningTextProps {
   texts: string[];
 }
 
-const RunningTextWrapper = styled.div<{ $bg: string }>`
+const RunningTextWrapper = styled.div`
   width: 100%;
-  background-color: ${props => props.$bg};
-  box-shadow: ${props => props.theme.shadows?.low};
+  background-color: ${colorVars.primary};
+  box-shadow: ${props => props.theme.shadow.low};
   overflow: hidden;
   padding: 0.5rem 0rem;
   margin-top: 1.5rem;
@@ -30,15 +29,13 @@ const rightToLeftScrollingAnimation = keyframes`
 
 const animationDurationPerText = 4;
 
-const RunningTextInnerWrapper = styled.ul<{
-  $totalText: number;
-  $c: string;
-}>`
+const RunningTextInnerWrapper = styled.ul<{ $totalText: number }>`
   list-style: none;
   font-family: ${props => props.theme.fontBase};
-  font-size: 0.8375rem;
-  line-height: 1.0625rem;
-  color: ${props => props.$c};
+
+  font-size: 1.375rem;
+  line-height: 1.5rem;
+  color: ${colorVars.secondary};
 
   display: flex;
   align-items: center;
@@ -53,9 +50,9 @@ const RunningTextInnerWrapper = styled.ul<{
   animation-duration: ${props =>
     props.$totalText * animationDurationPerText}s;
 
-  ${props => createMediaQuery(props.theme.breakpoints?.lg ?? '')} {
-    font-size: 1.375rem;
-    line-height: 1.5rem;
+  ${props => props.theme.breakpoint.md} {
+    font-size: 0.8375rem;
+    line-height: 1.0625rem;
   }
 
   > li {
@@ -71,16 +68,9 @@ const RunningTextInnerWrapper = styled.ul<{
 `;
 
 export default function RunningText({ texts }: RunningTextProps) {
-  const {
-    states: { colors },
-  } = useAppContext();
-
   return (
-    <RunningTextWrapper $bg={colors.primary}>
-      <RunningTextInnerWrapper
-        $c={colors.secondary}
-        $totalText={texts.length}
-      >
+    <RunningTextWrapper>
+      <RunningTextInnerWrapper $totalText={texts.length}>
         {texts.map((text, index) => (
           <li key={index}>{text}</li>
         ))}

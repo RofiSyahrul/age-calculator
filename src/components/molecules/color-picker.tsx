@@ -8,12 +8,13 @@ import React, {
   useEffect,
 } from 'react';
 
-import { Box, Text } from 'goods-core';
-import { Button } from 'goods-ui';
 import type { ColorChangeHandler } from 'react-color';
-import { SketchPicker } from 'react-color';
+import SketchPicker from 'react-color/lib/components/sketch/Sketch';
+import styled, { useTheme } from 'styled-components';
 
+import Button from '@atoms/button';
 import { useAppContext } from 'src/context';
+import colorVars from 'src/utils/color-vars';
 
 const shadow =
   'rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.15) 0px 8px 16px';
@@ -36,10 +37,45 @@ const getOtherColors = (colors = {}, colorKey = '') => {
   return Object.values(newObj);
 };
 
+const SketchPickerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 100%;
+  z-index: 10;
+  width: 100%;
+  background: white;
+  border-radius: 0.5rem;
+  margin-top: 0.375rem;
+
+  &[aria-hidden='true'] {
+    display: none;
+  }
+`;
+
+const ActionWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  width: 100%;
+  box-shadow: ${shadow};
+`;
+
+const ActionButton = styled(Button)`
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 70px;
+  min-height: 2rem;
+  color: white;
+`;
+
 const Picker = forwardRef<PickerHandler, PickerProps>(
   (props, ref) => {
     const { colorKey } = props;
-    const [show, setShow] = useState(false);
+    const theme = useTheme();
+    const [isVisible, setIsVisible] = useState(false);
     const {
       states: { colors, totalOpened, isPickerShown },
       actions: {
@@ -51,7 +87,7 @@ const Picker = forwardRef<PickerHandler, PickerProps>(
     } = useAppContext();
 
     const togglePicker = useCallback(() => {
-      setShow(prev => {
+      setIsVisible(prev => {
         if (!prev && totalOpened > 0) {
           return false;
         }
@@ -59,13 +95,13 @@ const Picker = forwardRef<PickerHandler, PickerProps>(
       });
     }, [colorKey, totalOpened]);
 
-    const onCancel = useCallback(() => {
-      setShow(false);
+    const handleCancel = useCallback(() => {
+      setIsVisible(false);
       setTotalOpened(prevTotal => Math.max(prevTotal - 1, 0));
       cancelChangeColor(colorKey);
     }, [colorKey]);
 
-    const onChange = useCallback<ColorChangeHandler>(
+    const handleChange = useCallback<ColorChangeHandler>(
       color => {
         const otherColors = getOtherColors(colors, colorKey);
         if (otherColors.includes(color.hex)) {
@@ -76,8 +112,8 @@ const Picker = forwardRef<PickerHandler, PickerProps>(
       [colorKey],
     );
 
-    const onSave = useCallback(() => {
-      setShow(false);
+    const handleSave = useCallback(() => {
+      setIsVisible(false);
       setTotalOpened(prevTotal => prevTotal - 1);
       saveChangeColor(colorKey);
     }, [colorKey]);
@@ -85,122 +121,108 @@ const Picker = forwardRef<PickerHandler, PickerProps>(
     useImperativeHandle(ref, () => ({ togglePicker }), [totalOpened]);
 
     useEffect(() => {
-      if (show) {
+      if (isVisible) {
         setTotalOpened(prev => prev + 1);
       } else {
         setTotalOpened(prev => Math.max(prev - 1, 0));
       }
-    }, [show]);
+    }, [isVisible]);
 
     useEffect(() => {
-      if (!isPickerShown) onCancel();
+      if (!isPickerShown) handleCancel();
     }, [isPickerShown]);
 
     return (
-      <Box
-        d={show ? 'flex' : 'none'}
-        posi='absolute'
-        top='100%'
-        z={10}
-        w
-        bg='white'
-        fJustify='center'
-        radius='l'
-        mt='5px'
-      >
+      <SketchPickerWrapper aria-hidden={!isVisible}>
         <SketchPicker
           width='initial'
-          onChangeComplete={onChange}
+          onChangeComplete={handleChange}
           color={colors[colorKey]}
           disableAlpha
         />
-        <Box
-          p='xxs'
-          fDir='row'
-          fJustify='space-between'
-          fAlign='center'
-          w
-          shadow={shadow}
-        >
-          <Button
-            bg='red60'
-            radius='l'
-            p='xxs'
-            c='white'
-            w='70px'
-            minH='32px'
-            onClick={onCancel}
+        <ActionWrapper>
+          <ActionButton
+            $bg={theme.color.red.t60}
+            onClick={handleCancel}
           >
             Cancel
-          </Button>
-          <Button
-            bg='blue50'
-            radius='l'
-            p='xxs'
-            c='white'
-            w='70px'
-            minH='32px'
-            onClick={onSave}
-          >
-            Save
-          </Button>
-        </Box>
-      </Box>
+          </ActionButton>
+          <ActionButton onClick={handleSave}>Save</ActionButton>
+        </ActionWrapper>
+      </SketchPickerWrapper>
     );
   },
 );
 
+const ColorPickerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0.75rem 0rem;
+  position: relative;
+  transition: inherit;
+  transition-property: opacity;
+  opacity: 1;
+
+  &[aria-hidden='true'] {
+    opacity: 0;
+  }
+`;
+
+const PickerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: ${colorVars.primary};
+  box-shadow: ${shadow};
+`;
+
+const ColorButton = styled(Button)`
+  border-radius: 50%;
+  width: 1.25rem;
+  min-height: 1.25rem;
+  border: 1px solid ${colorVars.white};
+`;
+
+const Label = styled.label`
+  font-size: 0.875rem;
+  line-height: 1.3em;
+  margin: 0rem 0.5rem;
+  color: ${colorVars.white};
+`;
+
 const ColorPicker = memo<ColorPickerProps>(({ colorKey, label }) => {
   const pickerRef = createRef<PickerHandler>();
+  const buttonId = `color-picker-btn__${colorKey}`;
+  const labelId = `color-picker-label__${colorKey}`;
 
   const {
-    states: { colors, isPickerShown },
+    states: { isPickerShown },
   } = useAppContext();
 
-  const onClickColor = useCallback(() => {
+  const handleClickColor = useCallback(() => {
     if (pickerRef.current) pickerRef.current.togglePicker();
   }, [pickerRef]);
 
   return (
-    <Box
-      w
-      my='xs'
-      posi='relative'
-      fAlign='center'
-      fJustify='center'
-      transition='inherit'
-      tProperty='opacity'
-      opacity={isPickerShown ? 1 : 0}
-    >
-      <Box
-        w
-        p='xxs'
-        bg={colors.primary}
-        radius='8px'
-        fDir='row'
-        fAlign='center'
-        shadow={shadow}
-      >
-        <Button
-          bg={colors[colorKey]}
-          radius='50%'
-          w='20px'
-          minH='20px'
-          onClick={onClickColor}
-          b={`1px solid ${colors.white}`}
+    <ColorPickerWrapper aria-hidden={!isPickerShown}>
+      <PickerWrapper>
+        <ColorButton
+          $bg={colorVars[colorKey]}
+          onClick={handleClickColor}
+          id={buttonId}
+          aria-labelledby={labelId}
         />
-        <Text
-          c={colors.white}
-          as='span'
-          fSize='14px'
-          mx='xxs'
-          lineHeight='1.3em'
-        >
+        <Label id={labelId} htmlFor={buttonId}>
           {label}
-        </Text>
-      </Box>
+        </Label>
+      </PickerWrapper>
       <Picker ref={pickerRef} colorKey={colorKey} />
-    </Box>
+    </ColorPickerWrapper>
   );
 });
 

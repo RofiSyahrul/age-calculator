@@ -1,44 +1,30 @@
 import React, { lazy, Suspense } from 'react';
 
-import {
-  Box,
-  GoodsProvider,
-  overrideGoodsTheme,
-  Spinner,
-} from 'goods-core';
-import type { DefaultTheme } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
-import SettingButton from '@atoms/setting-button';
+import Spinner from '@atoms/spinner';
 import Footer from '@molecules/footer';
+import SettingButton from '@molecules/setting-button';
 
 import GlobalStyles from './assets/styles';
+import theme from './assets/theme';
 import { useAppState, AppContext, useAppContext } from './context';
-import { pickersWidth, shadow } from './utils/constants';
+import { pickersWidth } from './utils/constants';
 
 const Age = lazy(() => import('@organisms/age'));
 const Pickers = lazy(() => import('@organisms/pickers'));
 
-const fontBase = [
-  '-apple-system',
-  'BlinkMacSystemFont',
-  'Segoe UI',
-  'Roboto',
-  'Oxygen',
-  'Ubuntu',
-  'Cantarell',
-  'Fira Sans',
-  'Droid Sans',
-  'Helvetica Neue',
-  'sans-serif',
-].join(', ');
-
-const theme: DefaultTheme = {
-  ...(overrideGoodsTheme({
-    breakpoints: { sm: '320px', xl: '1081px' },
-    shadows: { high: shadow },
-  }) as DefaultTheme),
-  fontBase,
-};
+const MainWrapper = styled.div<{ $isPickerShown: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: ${props =>
+    props.$isPickerShown ? `calc(100% - ${pickersWidth})` : '100%'};
+  min-height: calc(100vh - 80px);
+  position: relative;
+  transition: inherit;
+`;
 
 const Main: React.FC = () => {
   const {
@@ -47,35 +33,28 @@ const Main: React.FC = () => {
 
   if (isReady) {
     return (
-      <Box
-        w={isPickerShown ? `calc(100% - ${pickersWidth})` : '100%'}
-        minH='calc(100vh - 80px)'
-        fJustify='center'
-        fAlign='center'
-        posi='relative'
-        transition='inherit'
-      >
-        <Suspense fallback={<Spinner s='150px' />}>
+      <MainWrapper $isPickerShown={isPickerShown}>
+        <Suspense fallback={<Spinner />}>
           {!specialSetting && <Pickers />}
           <Age />
         </Suspense>
-      </Box>
+      </MainWrapper>
     );
   }
 
-  return <Spinner s='150px' />;
+  return <Spinner />;
 };
 
 export default function App(): JSX.Element {
   const { states, actions } = useAppState();
   return (
     <AppContext.Provider value={{ states, actions }}>
-      <GoodsProvider noGlobalStyle theme={theme}>
+      <ThemeProvider theme={theme}>
         <GlobalStyles />
         {!states.specialSetting && <SettingButton />}
         <Main />
         <Footer />
-      </GoodsProvider>
+      </ThemeProvider>
     </AppContext.Provider>
   );
 }

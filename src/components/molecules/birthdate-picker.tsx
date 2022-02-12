@@ -1,29 +1,38 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import DayjsUtils from '@date-io/dayjs';
 import { DatePicker } from '@material-ui/pickers/DatePicker/DatePicker';
 import MuiPickersUtilsProvider from '@material-ui/pickers/MuiPickersUtilsProvider';
-import { Box } from 'goods-core';
+import styled from 'styled-components';
 
 import { useAppContext } from 'src/context';
+import colorVars from 'src/utils/color-vars';
 
-const BirthdatePicker: React.FC = () => {
+const inputAndLabelProps = {
+  style: { color: colorVars.white },
+};
+
+const BirthdatePickerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0.5rem 0rem;
+`;
+
+export default function BirthdatePicker() {
   const {
-    states: { birthDate, colors },
+    states: { birthDate },
     actions: { changeBirthDate },
   } = useAppContext();
 
-  const styles = useMemo(
-    () => ({ style: { color: colors.white } }),
-    [colors],
-  );
-
   return (
-    <Box w my='xxs' fAlign='center' fJustify='center'>
+    <BirthdatePickerWrapper>
       <MuiPickersUtilsProvider utils={DayjsUtils}>
         <DatePicker
-          InputProps={styles}
-          InputLabelProps={styles}
+          InputProps={inputAndLabelProps}
+          InputLabelProps={inputAndLabelProps}
           className='birthdate-picker'
           disableFuture
           maxDateMessage="Date of birth can't use a future date"
@@ -37,8 +46,6 @@ const BirthdatePicker: React.FC = () => {
           style={{ width: '100%' }}
         />
       </MuiPickersUtilsProvider>
-    </Box>
+    </BirthdatePickerWrapper>
   );
-};
-
-export default BirthdatePicker;
+}

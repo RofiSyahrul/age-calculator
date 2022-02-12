@@ -1,14 +1,22 @@
 import { css } from 'styled-components';
 
-import { colors, pickersWidth } from 'src/utils/constants';
+import colorVars from 'src/utils/color-vars';
 
 interface GlobalCssProps {
-  background: string;
-  btnColor: string;
   isReady: boolean;
+  colors: Colors;
 }
 
 const GlobalCss = css<GlobalCssProps>`
+  ${props => css`
+    :root {
+      --primary: ${props.colors.primary};
+      --secondary: ${props.colors.secondary};
+      --background: ${props.colors.background};
+      --text: ${props.colors.white};
+    }
+  `}
+
   *,
   *::before,
   *::after {
@@ -17,10 +25,9 @@ const GlobalCss = css<GlobalCssProps>`
   * {
     color: inherit;
     transition: inherit;
-    font-family: ${({ theme }) => {
-      return theme.fontBase;
-    }};
+    font-family: ${props => props.theme.fontBase};
   }
+
   h1,
   h2,
   h3,
@@ -31,12 +38,14 @@ const GlobalCss = css<GlobalCssProps>`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
   p {
     margin: 0;
     color: inherit;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
   body {
     margin: 0px;
     padding: 0px auto;
@@ -45,9 +54,7 @@ const GlobalCss = css<GlobalCssProps>`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: ${({ background }) => {
-      return background || colors.background;
-    }};
+    background: ${colorVars.background};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: 'Source Sans Pro';
@@ -73,23 +80,6 @@ const GlobalCss = css<GlobalCssProps>`
         min-height: calc(100vh - 80px);
       `;
     }}
-  }
-
-  .setting-btn {
-    transition: inherit;
-    transition-property: transform, opacity;
-    &.hidden {
-      transform: translateX(min(${pickersWidth}, 100vw))
-        translateX(-100%) translateX(-32px);
-      opacity: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-    svg {
-      fill: ${({ btnColor }) => {
-        return btnColor || colors.secondary;
-      }};
-    }
   }
 
   @media (max-width: 649.95px) {

@@ -1,87 +1,46 @@
 import React, { lazy, Suspense } from 'react';
 
-import { Box, Text } from 'goods-core';
-
 import TimeUnit from '@molecules/time-unit';
 import { timeUnits } from 'src/utils/constants';
 
 import { useAge } from './age.hook';
+import {
+  AgeWrapper,
+  MajorTimeUnitWrapper,
+  MinorTimeUnitWrapper,
+  Title,
+} from './age.styles';
 
 const Confetti = lazy(() => import('@atoms/confetti'));
 const RunningText = lazy(() => import('@molecules/running-text'));
 
-const Age: React.FC = () => {
-  const {
-    age,
-    colors,
-    isBirthdayParty,
-    isPickerShown,
-    runningTexts,
-  } = useAge();
+export default function Age() {
+  const { age, isBirthdayParty, isPickerShown, runningTexts } =
+    useAge();
 
   return (
-    <Box
-      as='main'
-      w
-      maxW='700px'
-      fAlign='center'
-      fJustify='center'
-      opacity={{ xs: isPickerShown ? 0 : 1, md: 1 }}
-      transition='inherit'
-      tProperty='opacity'
-      className={isPickerShown ? 'with-picker' : ''}
-    >
+    <AgeWrapper className={isPickerShown ? 'with-picker' : ''}>
       {isBirthdayParty && (
         <Suspense fallback={<div style={{ position: 'fixed' }} />}>
           <Confetti />
         </Suspense>
       )}
-      <Text
-        as='h1'
-        fSize={{
-          xs: '39px',
-          sm: '65px',
-          md: isPickerShown ? '80px' : '100px',
-          lg: '100px',
-        }}
-        weight='bold'
-        c={colors.secondary}
-        lineHeight='1.3em'
-      >
-        Age
-      </Text>
-      <Box
-        w
-        d='grid'
-        gTempCol='repeat(3, 1fr)'
-        fJustify='space-between'
-        fAlign='center'
-        py='l'
-        px='xxs'
-      >
+      <Title>Age</Title>
+      <MajorTimeUnitWrapper>
         {timeUnits.slice(0, 3).map(unit => (
           <TimeUnit key={unit} value={age[unit]} unit={unit} />
         ))}
-      </Box>
-      <Box
-        w
-        maxW='600px'
-        d='grid'
-        gTempCol='repeat(3, 1fr)'
-        fJustify='center'
-        fAlign='center'
-      >
+      </MajorTimeUnitWrapper>
+      <MinorTimeUnitWrapper>
         {timeUnits.slice(3).map(unit => (
           <TimeUnit key={unit} value={age[unit]} unit={unit} />
         ))}
-      </Box>
+      </MinorTimeUnitWrapper>
       {isBirthdayParty && runningTexts.length > 0 && (
         <Suspense fallback={<div />}>
           <RunningText texts={runningTexts} />
         </Suspense>
       )}
-    </Box>
+    </AgeWrapper>
   );
-};
-
-export default Age;
+}

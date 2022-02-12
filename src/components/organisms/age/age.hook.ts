@@ -83,7 +83,6 @@ const reducer = produce((draft: State, action: Action) => {
 
 type HookReturn = {
   age: Age;
-  colors: Colors;
   isBirthdayParty: boolean;
   isPickerShown: boolean;
   runningTexts: string[];
@@ -96,7 +95,7 @@ function parseRunningText(rawText: string, year?: number) {
 
 export const useAge = (): HookReturn => {
   const {
-    states: { birthDate, colors, isPickerShown, specialSetting },
+    states: { birthDate, isPickerShown, specialSetting },
   } = useAppContext();
 
   const { confettiLive, runningTexts } = specialSetting || {};
@@ -142,7 +141,6 @@ export const useAge = (): HookReturn => {
 
   return {
     age,
-    colors,
     isBirthdayParty,
     isPickerShown,
     runningTexts: parsedRunningTexts,

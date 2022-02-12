@@ -1,5 +1,4 @@
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import ESLintPlugin from 'eslint-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import PreloadWebpackPlugin from 'preload-webpack-plugin';
 import { DefinePlugin } from 'webpack';
@@ -133,7 +132,6 @@ const commonConfig = async (): Promise<Configuration> => ({
       SPECIAL: (await fetchSpecialData()) as never,
     }),
     new PreloadWebpackPlugin({ rel: 'preload', include: 'initial' }),
-    new ESLintPlugin({ extensions: ['.ts', '.tsx', '.js'] }),
   ],
   output: {
     path: build,

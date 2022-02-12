@@ -17,7 +17,6 @@ const viewport =
 
 const title = isExtension ? 'New Tab' : 'Calculate your age';
 const favicon = './public/rho-pi.ico';
-const url = 'https://calculate-your-age.netlify.app';
 const ogImage =
   'https://avatars1.githubusercontent.com/u/44445726?s=460&u=7226c3b6d6e2d2163dd0eab652c20aaba6775755&v=4';
 
@@ -59,7 +58,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
   templateParameters: {
     description,
     title,
-    url,
+    url: pkg.homepage,
     ogImage,
     favicon: '/rho-pi.ico',
     themeColor: theme_color,

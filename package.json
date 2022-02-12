@@ -21,6 +21,7 @@
     "calculate-your-age"
   ],
   "author": "Rofi",
+  "homepage": "https://age.rofi.link",
   "license": "MIT",
   "repository": {
     "type": "git",

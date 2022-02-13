@@ -26,6 +26,10 @@ export function setLocalStorage(
         resolve('OK');
       });
     } catch {
+      if (!value) {
+        localStorage.removeItem(key);
+        return;
+      }
       localStorage.setItem(key, value);
     }
   });

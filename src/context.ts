@@ -22,6 +22,7 @@ import {
 } from './utils/helpers';
 
 type State = {
+  isDefaultColors: boolean;
   isReady: boolean;
   isPickerShown: boolean;
   birthDate: string | Date;
@@ -32,6 +33,7 @@ type State = {
 
 type ReducerState = Pick<
   State,
+  | 'isDefaultColors'
   | 'isReady'
   | 'birthDate'
   | 'colors'
@@ -66,6 +68,10 @@ type SaveChangeColorAction = {
   payload: { key: ColorName };
 };
 
+type ResetColorsAction = {
+  type: 'RESET_COLORS';
+};
+
 type TogglePickerAction = {
   type: 'TOGGLE_PICKER';
 };
@@ -76,18 +82,20 @@ type ReducerAction =
   | ChangeBirthDateAction
   | ChangeColorAction
   | SaveChangeColorAction
+  | ResetColorsAction
   | TogglePickerAction;
 
-const keys: ColorName[] = [
+const colorNames: ColorName[] = [
   'primary',
   'secondary',
   'background',
   'white',
 ];
 
-const promises = [getDob(), ...keys.map(getLocalStorage)];
+const promises = [getDob(), ...colorNames.map(getLocalStorage)];
 
 const initialState: ReducerState = {
+  isDefaultColors: true,
   isReady: false,
   isPickerShown: window.innerWidth >= 768,
   birthDate: defaultDob,
@@ -102,9 +110,17 @@ const reducer = produce(
         if (action.payload.list) {
           const [birthDate, ...colors] = action.payload.list;
           draft.birthDate = birthDate;
+          let isDefaultColors = true;
           colors.forEach((color, i) => {
-            if (color) draft.colors[keys[i]] = color;
+            if (color) {
+              const colorName = colorNames[i];
+              draft.colors[colorName] = color;
+              if (color !== defaultColors[colorName]) {
+                isDefaultColors = false;
+              }
+            }
           });
+          draft.isDefaultColors = isDefaultColors;
         }
         draft.isReady = true;
         return;
@@ -134,14 +150,23 @@ const reducer = produce(
           setLocalStorage('dob', newBirthDate.toISOString());
         }
         return;
-      case 'CHANGE_COLOR':
-        draft.colors[action.payload.key] = action.payload.value;
+      case 'CHANGE_COLOR': {
+        const { key, value } = action.payload;
+        draft.colors[key] = value;
+        if (value !== defaultColors[key]) {
+          draft.isDefaultColors = false;
+        }
         return;
+      }
       case 'SAVE_CHANGE_COLOR':
         setLocalStorage(
           action.payload.key,
           draft.colors[action.payload.key],
         );
+        return;
+      case 'RESET_COLORS':
+        draft.colors = defaultColors;
+        draft.isDefaultColors = true;
         return;
       case 'TOGGLE_PICKER':
         draft.isPickerShown = !draft.isPickerShown;
@@ -157,6 +182,7 @@ type Action = {
   previewColor(key: ColorName, value: string): void;
   saveChangeColor(key: ColorName): void;
   cancelChangeColor(key: ColorName): Promise<void>;
+  resetColors(): Promise<void>;
   togglePicker(): void;
   setTotalOpened: React.Dispatch<React.SetStateAction<number>>;
 };
@@ -205,6 +231,17 @@ export const useAppState = (): Context => {
     [specialSetting],
   );
 
+  const resetColors = useCallback<Action['resetColors']>(async () => {
+    dispatch({ type: 'RESET_COLORS' });
+    try {
+      await Promise.all(
+        colorNames.map(key => setLocalStorage(key, '')),
+      );
+    } finally {
+      return;
+    }
+  }, []);
+
   const togglePicker = useCallback(() => {
     dispatch({ type: 'TOGGLE_PICKER' });
   }, []);
@@ -218,6 +255,7 @@ export const useAppState = (): Context => {
         previewColor,
         cancelChangeColor,
         saveChangeColor,
+        resetColors,
         togglePicker,
       },
     }),
@@ -252,6 +290,9 @@ export const AppContext = createContext<Context>({
     previewColor() {},
     setTotalOpened() {},
     togglePicker() {},
+    resetColors() {
+      return Promise.resolve();
+    },
     cancelChangeColor() {
       return Promise.resolve();
     },

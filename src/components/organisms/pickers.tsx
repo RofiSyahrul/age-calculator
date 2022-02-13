@@ -76,12 +76,22 @@ const CloseButton = styled(Button)`
   }
 `;
 
+const ResetButton = styled(Button)`
+  min-height: 2.5rem;
+  max-width: 100%;
+  margin-top: 0.75rem;
+  padding: 0rem 0.75rem;
+  width: fit-content;
+  align-self: flex-end;
+  color: ${colorVars.background};
+`;
+
 const buttonTitle = 'Close picker setting';
 
 export default function Pickers() {
   const {
-    states: { isPickerShown },
-    actions: { togglePicker },
+    states: { isDefaultColors, isPickerShown },
+    actions: { resetColors, togglePicker },
   } = useAppContext();
 
   return (
@@ -100,6 +110,13 @@ export default function Pickers() {
       {colors.map(item => (
         <ColorPicker key={item.colorKey} {...item} />
       ))}
+      <ResetButton
+        $bg={colorVars.secondary}
+        onClick={resetColors}
+        disabled={isDefaultColors}
+      >
+        Reset colors to default
+      </ResetButton>
     </Aside>
   );
 }

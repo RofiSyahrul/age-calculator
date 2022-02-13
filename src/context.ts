@@ -8,7 +8,6 @@ import {
   useMemo,
 } from 'react';
 
-import type { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import { produce } from 'immer';
 
 import {
@@ -54,7 +53,7 @@ type SetSpecialSettingAction = {
 
 type ChangeBirthDateAction = {
   type: 'CHANGE_BIRTH_DATE';
-  payload: { date: MaterialUiPickersDate };
+  payload: { date: Date };
 };
 
 type ChangeColorAction = {
@@ -127,9 +126,9 @@ const reducer = produce(
         if (action.payload.date) {
           const { date } = action.payload;
           const newBirthDate = new Date(
-            date.year(),
-            date.month(),
-            date.date(),
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
           );
           draft.birthDate = newBirthDate;
           setLocalStorage('dob', newBirthDate.toISOString());
@@ -154,7 +153,7 @@ const reducer = produce(
 );
 
 type Action = {
-  changeBirthDate(date: MaterialUiPickersDate): void;
+  changeBirthDate(date: Date): void;
   previewColor(key: ColorName, value: string): void;
   saveChangeColor(key: ColorName): void;
   cancelChangeColor(key: ColorName): Promise<void>;

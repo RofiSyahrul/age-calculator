@@ -16,9 +16,6 @@ import Button from '@atoms/button';
 import { useAppContext } from 'src/context';
 import colorVars from 'src/utils/color-vars';
 
-const shadow =
-  'rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.15) 0px 8px 16px';
-
 interface PickerProps {
   colorKey: ColorName;
 }
@@ -60,7 +57,7 @@ const ActionWrapper = styled.div`
   align-items: center;
   padding: 0.5rem;
   width: 100%;
-  box-shadow: ${shadow};
+  box-shadow: ${props => props.theme.shadow.medium};
 `;
 
 const ActionButton = styled(Button)`
@@ -178,7 +175,7 @@ const PickerWrapper = styled.div`
   padding: 0.75rem;
   border-radius: 0.5rem;
   background-color: ${colorVars.primary};
-  box-shadow: ${shadow};
+  box-shadow: ${props => props.theme.shadow.medium};
 `;
 
 const ColorButton = styled(Button)`

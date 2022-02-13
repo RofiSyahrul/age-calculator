@@ -55,7 +55,7 @@ const ActionWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  padding-right: 0.5rem;
+  margin-bottom: 1rem;
   transition: inherit;
   transition-property: opacity;
   opacity: 1;
@@ -66,8 +66,14 @@ const ActionWrapper = styled.div`
 `;
 
 const CloseButton = styled(Button)`
-  width: 3rem;
   padding: 0rem;
+  min-height: 2rem;
+  color: ${colorVars.white};
+
+  &:hover,
+  &:focus {
+    color: ${colorVars.secondary};
+  }
 `;
 
 const buttonTitle = 'Close picker setting';
@@ -87,7 +93,7 @@ export default function Pickers() {
           title={buttonTitle}
           aria-label={buttonTitle}
         >
-          <CloseIcon color={colorVars.secondary} size='large' />
+          <CloseIcon color='currentColor' size='large' />
         </CloseButton>
       </ActionWrapper>
       <BirthdatePicker />

@@ -41,6 +41,8 @@ type Color = typeof color;
 const shadow = {
   flat: '0px',
   low: '0px 2px 8px -2px rgba(0, 0, 0, 0.16)',
+  medium:
+    'rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.15) 0px 8px 16px',
   high: '0 1px 8px 8px rgba(0, 0, 0, 0.5)',
 } as const;
 

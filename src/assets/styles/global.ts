@@ -2,9 +2,38 @@ import { css } from 'styled-components';
 
 import colorVars from 'src/utils/color-vars';
 
+import { calendarStyle } from './calendar';
+import { datePickerStyle } from './date-picker';
+
 interface GlobalCssProps {
   isReady: boolean;
   colors: Colors;
+}
+
+function invertColor(hex: string): string {
+  let normedHex = hex;
+  if (normedHex.startsWith('#')) {
+    normedHex = normedHex.substring(1);
+  }
+
+  if (normedHex.length === 3) {
+    normedHex = normedHex.replace(
+      /[a-fA-F0-9]/g,
+      match => `${match}${match}`,
+    );
+  }
+
+  if (normedHex.length !== 6) return hex;
+
+  const red = 255 - parseInt(normedHex.substring(0, 2), 16);
+  const green = 255 - parseInt(normedHex.substring(2, 4), 16);
+  const blue = 255 - parseInt(normedHex.substring(4, 6), 16);
+
+  const result = [red, green, blue]
+    .map(value => value.toString(16).padStart(2, '0'))
+    .join('');
+
+  return `#${result}`;
 }
 
 const GlobalCss = css<GlobalCssProps>`
@@ -14,6 +43,9 @@ const GlobalCss = css<GlobalCssProps>`
       --secondary: ${props.colors.secondary};
       --background: ${props.colors.background};
       --text: ${props.colors.white};
+      --calendar-neighboring-month: ${invertColor(
+        props.colors.background,
+      )}9A;
     }
   `}
 
@@ -124,6 +156,9 @@ const GlobalCss = css<GlobalCssProps>`
       }
     }
   }
+
+  ${calendarStyle}
+  ${datePickerStyle}
 `;
 
 export default GlobalCss;

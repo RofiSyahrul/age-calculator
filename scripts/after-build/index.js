@@ -1,18 +1,20 @@
 const fs = require('fs');
 const path = require('path');
 
+const { manifest: manifestConfig } = require('../../config/config');
 const archiveBuild = require('./archive-build');
-const { manifest: manifestConfig } = require('./config/config');
 const updateReadme = require('./update-readme');
 
 const { icons } = manifestConfig;
 
-if (!fs.existsSync('./build')) {
-  fs.mkdirSync('./build');
+const buildDir = path.resolve(process.cwd(), 'build');
+
+if (!fs.existsSync(buildDir)) {
+  fs.mkdirSync(buildDir);
 }
 
-const jsFiles = fs.readdirSync('./build/js');
-const manifestPath = path.join(__dirname, 'build', 'manifest.json');
+const jsFiles = fs.readdirSync(path.resolve(buildDir, './js'));
+const manifestPath = path.join(buildDir, 'manifest.json');
 const manifestJson =
   fs.readFileSync(manifestPath, {
     encoding: 'utf8',
@@ -43,5 +45,10 @@ fs.writeFileSync(
   'utf8',
 );
 
-archiveBuild();
-updateReadme();
+archiveBuild()
+  .then(archivedFileName => {
+    updateReadme(archivedFileName);
+  })
+  .catch(err => {
+    console.log(err);
+  });

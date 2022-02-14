@@ -114,9 +114,9 @@
     "analyze": "ANALYZE=true yarn build:base",
     "build": "yarn build:base",
     "build:base": "NODE_ENV=production TS_NODE_PROJECT=tsconfig.node.json webpack --config config/webpack.config.ts --env env=prod",
-    "build:extension": "yarn prebuild && BUILD_ENV=extension yarn build:base && node after-build",
+    "build:extension": "yarn prebuild && BUILD_ENV=extension yarn build:base && node scripts/after-build",
     "lint-fix": "eslint . --ext .js,.jsx,.tsx,.ts -f table --fix; exit 0",
-    "prebuild": "node generate-manifest",
+    "prebuild": "node scripts/generate-manifest",
     "prepare": "husky install",
     "release": "standard-version --no-verify && yarn build:extension && git add . && git commit -m \"chore: update archived build to v$(jq -r .version package.json)\" --no-verify",
     "start": "yarn prebuild && NODE_ENV=development TS_NODE_PROJECT=tsconfig.node.json webpack serve --config config/webpack.config.ts --env env=dev --host 0.0.0.0"

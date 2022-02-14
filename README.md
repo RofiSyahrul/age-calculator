@@ -16,5 +16,5 @@ How to use this extension (**locally**):
 6. Navigate to the folder (e.g. `age-calculator`) and click **Open**.
 7. Done. This extension has been installed in your chrome. Open new tab to check.
 
-[1]: ../../raw/master/archive/age-calculator-2-4-0-00.zip
+[1]: ../../raw/master/archive/age-calculator-2-4-1-00.zip
 [2]: https://rofi.link/age-calc

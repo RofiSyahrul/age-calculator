@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/RofiSyahrul/age-calculator/compare/v2.3.0...v2.4.0) (2022-02-14)
+
+
+### Features
+
+* add functionality to reset colors to default values ([c749fff](https://github.com/RofiSyahrul/age-calculator/commit/c749fff4c9e635e3cfddfdd089211861600b637f))
+
+
+### Improvements
+
+* replace mui date picker with react-date-picker ([9964433](https://github.com/RofiSyahrul/age-calculator/commit/996443384841518cabaac1d438c3cce975f6c13f))
+* restructure script and archive files ([c98e4e7](https://github.com/RofiSyahrul/age-calculator/commit/c98e4e70ab3b509bfac48e6ad0ad65fa35f3f4a6))
+
 ## [2.3.0](https://github.com/RofiSyahrul/age-calculator/compare/v2.1.1...v2.3.0) (2022-02-12)
 
 ### Improvements

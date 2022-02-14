@@ -122,5 +122,5 @@
     "start": "yarn prebuild && NODE_ENV=development TS_NODE_PROJECT=tsconfig.node.json webpack serve --config config/webpack.config.ts --env env=dev --host 0.0.0.0"
   },
   "sideEffects": false,
-  "version": "2.3.0"
+  "version": "2.4.0"
 }

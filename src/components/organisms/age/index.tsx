@@ -1,4 +1,6 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
+
+import dynamic from 'next/dynamic';
 
 import TimeUnit from '@molecules/time-unit';
 import { timeUnits } from 'src/utils/constants';
@@ -11,8 +13,13 @@ import {
   Title,
 } from './age.styles';
 
-const Confetti = lazy(() => import('@atoms/confetti'));
-const RunningText = lazy(() => import('@molecules/running-text'));
+const Confetti = dynamic(() => import('@atoms/confetti'), {
+  ssr: false,
+});
+
+const RunningText = dynamic(() => import('@molecules/running-text'), {
+  ssr: false,
+});
 
 export default function Age() {
   const { age, isBirthdayParty, isPickerShown, runningTexts } =
@@ -20,11 +27,7 @@ export default function Age() {
 
   return (
     <AgeWrapper className={isPickerShown ? 'with-picker' : ''}>
-      {isBirthdayParty && (
-        <Suspense fallback={<div style={{ position: 'fixed' }} />}>
-          <Confetti />
-        </Suspense>
-      )}
+      {isBirthdayParty && <Confetti />}
       <Title>Age</Title>
       <MajorTimeUnitWrapper>
         {timeUnits.slice(0, 3).map(unit => (
@@ -37,9 +40,7 @@ export default function Age() {
         ))}
       </MinorTimeUnitWrapper>
       {isBirthdayParty && runningTexts.length > 0 && (
-        <Suspense fallback={<div />}>
-          <RunningText texts={runningTexts} />
-        </Suspense>
+        <RunningText texts={runningTexts} />
       )}
     </AgeWrapper>
   );

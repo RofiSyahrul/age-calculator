@@ -93,15 +93,16 @@ const UnitLabel = styled.span`
   }
 `;
 
-const TimeUnit = memo<TimeUnitProps>(({ value = 0, unit = '' }) => {
+const TimeUnit = memo<TimeUnitProps>(({ value, unit = '' }) => {
   const {
     states: { isPickerShown },
   } = useAppContext();
 
   const label = useMemo(
     () =>
-      `${value > 1 ? `${unit}s` : unit}`.replace(/^\S/g, match =>
-        match.toUpperCase(),
+      `${Number(value) > 1 ? `${unit}s` : unit}`.replace(
+        /^\S/g,
+        match => match.toUpperCase(),
       ),
     [value, unit],
   );
@@ -113,9 +114,7 @@ const TimeUnit = memo<TimeUnitProps>(({ value = 0, unit = '' }) => {
   return (
     <TimeUnitWrapper className={className}>
       <Circle>
-        <CircleText className='circle-text'>
-          {Number.isNaN(value) ? '-' : value}
-        </CircleText>
+        <CircleText className='circle-text'>{value ?? ''}</CircleText>
       </Circle>
       <UnitLabelWrapper>
         <UnitLabel className='unit-label'>{label}</UnitLabel>

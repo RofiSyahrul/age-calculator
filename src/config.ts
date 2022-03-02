@@ -1,4 +1,4 @@
-exports.manifest = {
+export const manifest = {
   short_name: 'Age Calculator and Updater',
   name: 'Age Calculator and Updater by Rofi',
   theme_color: '#366091',

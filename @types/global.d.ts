@@ -1,17 +1,17 @@
+/* eslint-disable no-unused-vars */
 /// <reference types='@types/chrome' />
 export {};
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const __DEV__: boolean;
+  const APP_URL: string;
   const APP_VERSION: string;
   const REPOSITORY_URL: string;
   const IS_EXTENSION: boolean;
-  const SPECIAL: Special;
 
   namespace NodeJS {
     interface ProcessEnv {
-      NODE_ENV: 'development' | 'production';
       BUILD_ENV: 'extension' | undefined;
     }
   }
@@ -44,4 +44,8 @@ declare global {
   }
 
   type Special = Record<string, Setting>;
+
+  interface AppPageProps {
+    special?: Special;
+  }
 }

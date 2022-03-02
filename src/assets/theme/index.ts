@@ -1,10 +1,10 @@
 import type { DefaultTheme } from 'styled-components';
 
 const screenTheme = {
-  xs: '319px',
-  sm: '479px',
+  xs: '360px',
+  sm: '540px',
   md: '768px',
-  lg: '1079px',
+  lg: '1080px',
   xl: '1366px',
 } as const;
 

@@ -1,19 +1,16 @@
-/* eslint-disable no-console */
-const fs = require('fs');
-const path = require('path');
-const { promisify } = require('util');
+import fs from 'fs';
+import { readdir } from 'fs/promises';
+import path from 'path';
 
-const archiver = require('archiver');
+import * as archiver from 'archiver';
 
-const { name, version } = require('../../package.json');
-
-const archiveDir = path.resolve(process.cwd(), 'archive');
-const buildDir = path.resolve(process.cwd(), 'build');
+import { name, version } from '../../package.json';
+import { archiveDir, buildDir } from './_paths';
 
 async function getTargetFileName() {
   const defaultTargetPath = `${name}-${version.replace(/\./g, '-')}`;
   const targetRegexp = new RegExp(`^${defaultTargetPath}`);
-  const archiveDirFiles = await promisify(fs.readdir)(archiveDir);
+  const archiveDirFiles = await readdir(archiveDir);
   const existingTargetFiles = archiveDirFiles.filter(fileName =>
     targetRegexp.test(fileName),
   );
@@ -22,11 +19,11 @@ async function getTargetFileName() {
   return `${defaultTargetPath}-${suffix}.zip`;
 }
 
-module.exports = async () => {
+export default async function archiveBuild() {
   const targetFileName = await getTargetFileName();
   const target = path.join(archiveDir, targetFileName);
   const output = fs.createWriteStream(target);
-  const archive = archiver('zip', {
+  const archive = archiver.create('zip', {
     zlib: { level: 9 },
   });
 
@@ -52,9 +49,9 @@ module.exports = async () => {
     throw err;
   });
 
-  archive.pipe(output);
+  archive.pipe(output as unknown as NodeJS.WritableStream);
   archive.directory(buildDir, false);
   archive.finalize();
 
   return targetFileName;
-};
+}

@@ -179,10 +179,10 @@ const PickerWrapper = styled.div`
 `;
 
 const ColorButton = styled(Button)`
-  border-radius: 50%;
-  width: 1.25rem;
-  min-height: 1.25rem;
-  border: 1px solid ${colorVars.white};
+  border-radius: 50% !important;
+  width: 1.25rem !important;
+  min-height: 1.25rem !important;
+  border: 1px solid ${colorVars.white} !important;
 `;
 
 const Label = styled.label`

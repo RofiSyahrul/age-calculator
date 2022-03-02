@@ -2,6 +2,11 @@ build
 node_modules
 package-lock.json
 .env
+.next
+out
 public/manifest.json
+public/sw.js
+public/workbox-*.js
 
 .vercel
+yarn-error.log

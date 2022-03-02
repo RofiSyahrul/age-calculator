@@ -1,6 +1,7 @@
 /* global chrome  */
 import dayjs from 'dayjs';
 
+import { decode, encode } from './codec';
 import { defaultDob, timeUnits } from './constants';
 
 export function getLocalStorage(key = ''): Promise<string> {
@@ -11,6 +12,10 @@ export function getLocalStorage(key = ''): Promise<string> {
         resolve(typeof res !== 'string' ? '' : res);
       });
     } catch {
+      if (typeof localStorage === 'undefined') {
+        resolve('');
+        return;
+      }
       resolve(localStorage.getItem(key) || '');
     }
   });
@@ -26,6 +31,7 @@ export function setLocalStorage(
         resolve('OK');
       });
     } catch {
+      if (typeof localStorage === 'undefined') return;
       if (!value) {
         localStorage.removeItem(key);
         return;
@@ -35,11 +41,22 @@ export function setLocalStorage(
   });
 }
 
-export function getSpecialSetting(): Setting | null {
+export function getSpecialSetting(
+  specialData?: Special,
+): Setting | null {
+  if (!specialData) return null;
+
   const qs = new URLSearchParams(window.location.search);
   const name = qs.get('untuk');
+
   if (!name) return null;
-  return SPECIAL[name] ?? null;
+
+  const encodedName = encode(name);
+  const specialSetting = specialData[encodedName];
+  if (!specialSetting) return null;
+
+  specialSetting.dob = decode(specialSetting.dob);
+  return specialSetting;
 }
 
 export async function getDob(): Promise<string> {
@@ -65,7 +82,11 @@ function getDays(now = dayjs(), dob = dayjs()) {
   return dayjs(now).diff(temp, 'd');
 }
 
-export function getAge(birthDate: string | Date = defaultDob): Age {
+export function getAge(birthDate?: string | Date): Age {
+  if (!birthDate) {
+    return { rem: 0 };
+  }
+
   const now = dayjs();
   const dob = dayjs(birthDate);
   const daysDiffInSeconds = now.diff(dob, 'd') * 24 * 60 * 60;
@@ -102,7 +123,8 @@ export function getAge(birthDate: string | Date = defaultDob): Age {
   }, ageObj);
 }
 
-export function getMaxDaysInMonth(birthDate: string | Date): number {
+export function getMaxDaysInMonth(birthDate?: string | Date): number {
+  if (!birthDate) return 30;
   const dob = dayjs(birthDate);
   const now = dayjs();
   const dobThisMonthAndYear = dob.month(now.month()).year(now.year());

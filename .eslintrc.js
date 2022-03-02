@@ -1,5 +1,3 @@
-const { alias } = require('./.paths');
-
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   parser: '@typescript-eslint/parser',
@@ -79,12 +77,7 @@ module.exports = {
     'import/resolver': {
       node: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.d.ts'],
-      },
-      'babel-module': {
-        alias,
-      },
-      react: {
-        version: 'detect',
+        moduleDirectory: ['node_modules', 'src/'],
       },
       typescript: {
         alwaysTryTypes: true,
@@ -94,7 +87,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.ts', '**/*.tsx'],
+      files: ['src/**/*.ts', 'src/**/*.tsx'],
       extends: [
         'plugin:react/recommended',
         'plugin:import/errors',
@@ -242,6 +235,22 @@ module.exports = {
           },
         ],
       },
+    },
+    {
+      files: ['scripts/**/*.ts'],
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+          arrowFunctions: true,
+        },
+        project: './tsconfig.node.json',
+        parser: '@typescript-eslint/parser',
+      },
+      rules: {
+        'no-console': 'off'
+      }
     },
     {
       files: ['**/*.js', '*.js'],

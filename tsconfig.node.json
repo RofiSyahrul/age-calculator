@@ -6,13 +6,13 @@
     },
     "types": ["node"],
     "module": "commonjs",
-    "target": "es5",
+    "target": "ES2021",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "typeRoots": ["./@types", "./node_modules/@types"]
   },
   "include": [
-    "./config/**/*.ts",
+    "./scripts/**/*.ts",
     "./src/*",
     "./src/**/*",
     "./@types/*"

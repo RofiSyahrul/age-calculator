@@ -1,14 +1,15 @@
-import { useEffect, useMemo, useReducer } from 'react';
+import { useEffect, useMemo, useReducer, useRef } from 'react';
 
 import { produce } from 'immer';
 import isEqual from 'react-fast-compare';
 
 import { useAppContext } from 'src/context';
+import { decode } from 'src/utils/codec';
 import { getAge, getMaxDaysInMonth } from 'src/utils/helpers';
 
 type State = {
   age: Age;
-  birthDate: string | Date;
+  birthDate?: string | Date;
   maxDays: number;
 };
 
@@ -23,7 +24,7 @@ type ChangeBirthDateAction = {
 
 type Action = IncreaseAgeAction | ChangeBirthDateAction;
 
-function initializeState(birthDate: string | Date): State {
+function initializeState(birthDate?: string | Date): State {
   return {
     birthDate,
     age: getAge(birthDate),
@@ -97,6 +98,7 @@ export const useAge = (): HookReturn => {
   const {
     states: { birthDate, isPickerShown, specialSetting },
   } = useAppContext();
+  const prevBirthDateRef = useRef(birthDate);
 
   const { confettiLive, runningTexts } = specialSetting || {};
 
@@ -121,12 +123,15 @@ export const useAge = (): HookReturn => {
   const parsedRunningTexts = useMemo(() => {
     if (!runningTexts) return [];
     return runningTexts.map(rawText =>
-      parseRunningText(rawText, age.year),
+      parseRunningText(decode(rawText), age.year),
     );
   }, [runningTexts, age.year]);
 
   useEffect(() => {
-    dispatch({ type: 'CHANGE_BIRTH_DATE', payload: { birthDate } });
+    if (birthDate && prevBirthDateRef.current !== birthDate) {
+      prevBirthDateRef.current = birthDate;
+      dispatch({ type: 'CHANGE_BIRTH_DATE', payload: { birthDate } });
+    }
   }, [birthDate]);
 
   useEffect(() => {

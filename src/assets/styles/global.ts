@@ -92,7 +92,7 @@ const GlobalCss = css<GlobalCssProps>`
     font-family: 'Source Sans Pro';
   }
 
-  #index {
+  #__next {
     width: 100%;
     display: flex;
     flex-direction: column;

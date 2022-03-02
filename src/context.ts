@@ -10,10 +10,7 @@ import {
 
 import { produce } from 'immer';
 
-import {
-  defaultDob,
-  colors as defaultColors,
-} from './utils/constants';
+import { colors as defaultColors } from './utils/constants';
 import {
   getDob,
   setLocalStorage,
@@ -25,7 +22,7 @@ type State = {
   isDefaultColors: boolean;
   isReady: boolean;
   isPickerShown: boolean;
-  birthDate: string | Date;
+  birthDate?: string | Date;
   colors: Colors;
   totalOpened: number;
   specialSetting: Setting | null;
@@ -97,8 +94,7 @@ const promises = [getDob(), ...colorNames.map(getLocalStorage)];
 const initialState: ReducerState = {
   isDefaultColors: true,
   isReady: false,
-  isPickerShown: window.innerWidth >= 768,
-  birthDate: defaultDob,
+  isPickerShown: false,
   colors: defaultColors,
   specialSetting: null,
 };
@@ -121,6 +117,7 @@ const reducer = produce(
             }
           });
           draft.isDefaultColors = isDefaultColors;
+          draft.isPickerShown = window.innerWidth >= 768;
         }
         draft.isReady = true;
         return;
@@ -192,7 +189,7 @@ type Context = {
   actions: Action;
 };
 
-export const useAppState = (): Context => {
+export const useAppState = (specialData?: Special): Context => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [totalOpened, setTotalOpened] = useState(0);
   const { specialSetting } = state;
@@ -263,7 +260,10 @@ export const useAppState = (): Context => {
   );
 
   useEffect(() => {
-    const special = IS_EXTENSION ? null : getSpecialSetting();
+    const special = IS_EXTENSION
+      ? null
+      : getSpecialSetting(specialData);
+
     if (special) {
       dispatch({
         type: 'SET_SPECIAL_SETTING',
@@ -277,7 +277,7 @@ export const useAppState = (): Context => {
         });
       });
     }
-  }, []);
+  }, [specialData]);
 
   return contextValue;
 };

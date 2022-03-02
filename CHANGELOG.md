@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.2](https://github.com/RofiSyahrul/age-calculator/compare/v2.4.1...v2.4.2) (2022-03-02)
+
+
+### Improvements
+
+* use nextjs ([bf62a7c](https://github.com/RofiSyahrul/age-calculator/commit/bf62a7c77e01b25d5ecb1678210f289eb04a65cc))
+
 ### [2.4.1](https://github.com/RofiSyahrul/age-calculator/compare/v2.4.0...v2.4.1) (2022-02-14)
 
 

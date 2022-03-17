@@ -81,7 +81,6 @@ const GlobalCss = css<GlobalCssProps>`
   body {
     margin: 0px;
     padding: 0px auto;
-    width: 100vw;
     min-height: 100vh;
     display: flex;
     flex-direction: column;

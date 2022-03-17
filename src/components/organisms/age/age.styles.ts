@@ -27,7 +27,7 @@ export const AgeWrapper = styled.main`
 `;
 
 export const Title = styled.h1`
-  font-size: 6.25rem;
+  font-size: 5.5rem;
   font-weight: bold;
   line-height: 1.3em;
   color: ${colorVars.secondary};
@@ -47,7 +47,7 @@ export const MajorTimeUnitWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 2rem 0.5rem;
+  padding: 1rem 0.5rem;
 `;
 
 export const MinorTimeUnitWrapper = styled.div`

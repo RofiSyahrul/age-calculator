@@ -9,4 +9,5 @@ public/sw.js
 public/workbox-*.js
 
 .vercel
+.DS_Store
 yarn-error.log

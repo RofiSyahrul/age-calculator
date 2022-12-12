@@ -1,12 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
+import type { GenericFunction } from '@supabase/supabase-js/dist/module/lib/types';
 
 import { encode } from 'src/utils/codec';
 import { colors, defaultDob } from 'src/utils/constants';
-
-const supabase = createClient(
-  process.env.SUPABASE_URL ?? '',
-  process.env.SUPABASE_SECRET ?? '',
-);
 
 type SpecialItem = {
   name: string;
@@ -19,21 +15,33 @@ type SpecialItem = {
   running_texts: string[] | null;
 };
 
-export async function fetchSpecialData(): Promise<Special> {
-  const columns: Array<keyof SpecialItem> = [
-    'background_color',
-    'confetti_live',
-    'date_of_birth',
-    'name',
-    'primary_color',
-    'running_texts',
-    'secondary_color',
-    'text_color',
-  ];
+interface SpecialTable {
+  Row: SpecialItem;
+  Insert: SpecialItem;
+  Update: SpecialItem;
+}
 
-  const { data, error } = await supabase
-    .from<SpecialItem>('special')
-    .select(columns.join());
+interface DatabaseSchema {
+  Tables: {
+    special: SpecialTable;
+  };
+  Views: {
+    special: SpecialTable;
+  };
+  Functions: Record<string, GenericFunction>;
+}
+
+interface Database {
+  public: DatabaseSchema;
+}
+
+const supabase = createClient<Database>(
+  process.env.SUPABASE_URL ?? '',
+  process.env.SUPABASE_SECRET ?? '',
+);
+
+export async function fetchSpecialData(): Promise<Special> {
+  const { data, error } = await supabase.from('special').select('*');
 
   if (!data || !data.length || error) {
     // eslint-disable-next-line no-console

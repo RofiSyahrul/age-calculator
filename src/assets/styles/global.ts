@@ -5,7 +5,7 @@ import colorVars from 'src/utils/color-vars';
 import { calendarStyle } from './calendar';
 import { datePickerStyle } from './date-picker';
 
-interface GlobalCssProps {
+export interface GlobalCssProps {
   isReady: boolean;
   colors: Colors;
 }

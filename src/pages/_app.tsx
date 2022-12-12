@@ -1,8 +1,12 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ThemeProvider } from 'styled-components';
+import type {
+  DefaultTheme,
+  ThemeProviderProps,
+} from 'styled-components';
+import { ThemeProvider as ThemeProviderBase } from 'styled-components';
 
 import Footer from '@molecules/footer';
 import GlobalStyle from 'src/assets/styles';
@@ -16,6 +20,10 @@ const favicon = '/rho-pi.ico';
 const imageURL = singleLineNoSpace`https://res.cloudinary.com/rofi
   /image/upload/v1640233522/samples/rho-pi.png`;
 const title = IS_EXTENSION ? 'New Tab' : 'Calculate your age';
+
+const ThemeProvider = ThemeProviderBase as unknown as FC<
+  ThemeProviderProps<DefaultTheme>
+>;
 
 function AppHeadContent() {
   return (

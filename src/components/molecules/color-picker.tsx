@@ -1,4 +1,5 @@
-import React, {
+import type { FC } from 'react';
+import {
   forwardRef,
   useState,
   useImperativeHandle,
@@ -9,7 +10,8 @@ import React, {
 } from 'react';
 
 import type { ColorChangeHandler } from 'react-color';
-import SketchPicker from 'react-color/lib/components/sketch/Sketch';
+import type { SketchPickerProps } from 'react-color/lib/components/sketch/Sketch';
+import Sketch from 'react-color/lib/components/sketch/Sketch';
 import styled, { useTheme } from 'styled-components';
 
 import Button from '@atoms/button';
@@ -27,6 +29,8 @@ interface ColorPickerProps extends PickerProps {
 interface PickerHandler {
   togglePicker(): void;
 }
+
+const SketchPicker = Sketch as unknown as FC<SketchPickerProps>;
 
 const getOtherColors = (colors = {}, colorKey = '') => {
   const newObj = { ...colors };

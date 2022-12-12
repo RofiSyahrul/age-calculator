@@ -9,8 +9,10 @@ type ManifestForExtension = {
   icons: Record<number, string>;
   chrome_url_overrides: { newtab: string };
   permissions: string[];
-  browser_action: Record<string, unknown>;
-  content_security_policy: string;
+  content_security_policy: {
+    extension_pages: string;
+    sandbox?: string;
+  };
   content_scripts: Array<{ matches: string[]; js: string[] }>;
   theme_color?: string;
   background_color?: string;
@@ -28,13 +30,14 @@ export default async function buildManifest(params: {
 
   const manifest: ManifestForExtension = JSON.parse(manifestJson);
 
-  manifest.manifest_version = 2;
+  manifest.manifest_version = 3;
   manifest.icons = { 192: icons[0].src, 512: icons[1].src };
   manifest.chrome_url_overrides = { newtab: 'index.html' };
   manifest.permissions = ['storage'];
-  manifest.browser_action = {};
-  manifest.content_security_policy =
-    "script-src 'self' 'sha256-FyiKpy3PpN1/MM6lBhmjdt7P5PXAcmjHEWQr2bhYhkk='; style-src 'self' 'unsafe-inline'; object-src 'self'; img-src 'self' data:; default-src 'self' 'unsafe-inline'";
+  manifest.content_security_policy = {
+    extension_pages:
+      "script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'self'; img-src 'self' data:; default-src 'self' 'unsafe-inline'",
+  };
   manifest.content_scripts = [
     {
       matches: ['http://google.com/*', 'https://google.com/*'],

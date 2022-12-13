@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createGlobalStyle } from 'styled-components';
 
-import { useAppContext } from 'src/context';
+import { useAppState } from 'src/store';
 
 import type { GlobalCssProps } from './global';
 import GlobalCSS from './global';
@@ -12,9 +12,7 @@ const Styles = createGlobalStyle`
 ` as unknown as React.FC<GlobalCssProps>;
 
 const GlobalStyle: React.FC = () => {
-  const {
-    states: { colors, isReady },
-  } = useAppContext();
+  const { colors, isReady } = useAppState();
 
   return <Styles isReady={isReady} colors={colors} />;
 };

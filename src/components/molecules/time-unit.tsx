@@ -1,8 +1,8 @@
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
 import styled from 'styled-components';
 
-import { useAppContext } from 'src/context';
+import { useAppState } from 'src/store';
 import classnames from 'src/utils/classnames';
 import colorVars from 'src/utils/color-vars';
 
@@ -94,9 +94,7 @@ const UnitLabel = styled.span`
 `;
 
 const TimeUnit = memo<TimeUnitProps>(({ value, unit = '' }) => {
-  const {
-    states: { isPickerShown },
-  } = useAppContext();
+  const { isPickerShown } = useAppState();
 
   const label = useMemo(
     () =>

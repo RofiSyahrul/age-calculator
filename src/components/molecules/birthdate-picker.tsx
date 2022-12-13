@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import DatePicker from 'react-date-picker/dist/entry.nostyle';
 import styled from 'styled-components';
 
-import { useAppContext } from 'src/context';
+import { appAction, useAppState } from 'src/store';
 import colorVars from 'src/utils/color-vars';
 
 const BirthdatePickerWrapper = styled.div`
@@ -36,10 +36,7 @@ const maxDate = new Date();
 const minDate = new Date('1930-01-01T00:00:00+07:00');
 
 export default function BirthdatePicker() {
-  const {
-    states: { birthDate, isPickerShown },
-    actions: { changeBirthDate },
-  } = useAppContext();
+  const { birthDate, isPickerShown } = useAppState();
 
   const birthDateValue = useMemo(() => {
     if (typeof birthDate === 'string') return new Date(birthDate);
@@ -66,7 +63,7 @@ export default function BirthdatePicker() {
         format='dd-MM-y'
         maxDate={maxDate}
         minDate={minDate}
-        onChange={changeBirthDate}
+        onChange={appAction.changeBirthDate}
         value={birthDateValue}
       />
     </BirthdatePickerWrapper>

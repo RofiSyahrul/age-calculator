@@ -1,8 +1,6 @@
-import React from 'react';
-
 import styled from 'styled-components';
 
-import { useAppContext } from 'src/context';
+import { useAppState } from 'src/store';
 import colorVars from 'src/utils/color-vars';
 import { pickersWidth } from 'src/utils/constants';
 
@@ -51,9 +49,7 @@ const Anchor = styled.a`
 `;
 
 export default function Footer() {
-  const {
-    states: { isPickerShown, specialSetting },
-  } = useAppContext();
+  const { isPickerShown, specialSetting } = useAppState();
 
   return (
     <FooterWrapper className={isPickerShown ? 'with-picker' : ''}>

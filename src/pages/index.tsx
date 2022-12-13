@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 
 import type { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
@@ -6,9 +6,10 @@ import styled from 'styled-components';
 
 import SettingButton from '@molecules/setting-button';
 import Age from '@organisms/age';
-import { useAppContext } from 'src/context';
 import { fetchSpecialData } from 'src/services/supabase.server';
+import { appAction, useAppState } from 'src/store';
 import { pickersWidth } from 'src/utils/constants';
+import { getSpecialSetting } from 'src/utils/helpers';
 
 const Pickers = dynamic(() => import('@organisms/pickers'), {
   ssr: false,
@@ -29,10 +30,12 @@ const HomePageWrapper = styled.div`
   }
 `;
 
-export default function HomePage() {
-  const {
-    states: { isPickerShown, specialSetting, isReady },
-  } = useAppContext();
+export default function HomePage({ special }: AppPageProps) {
+  const { isPickerShown, isReady, specialSetting } = useAppState();
+
+  useEffect(() => {
+    appAction._init(IS_EXTENSION ? null : getSpecialSetting(special));
+  }, [special]);
 
   return (
     <>

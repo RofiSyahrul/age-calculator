@@ -15,7 +15,7 @@ import Sketch from 'react-color/lib/components/sketch/Sketch';
 import styled, { useTheme } from 'styled-components';
 
 import Button from '@atoms/button';
-import { useAppContext } from 'src/context';
+import { appAction, useAppState } from 'src/store';
 import colorVars from 'src/utils/color-vars';
 
 interface PickerProps {
@@ -72,20 +72,19 @@ const ActionButton = styled(Button)`
   color: white;
 `;
 
+const {
+  cancelChangeColor,
+  previewColor,
+  saveChangeColor,
+  setTotalOpened,
+} = appAction;
+
 const Picker = forwardRef<PickerHandler, PickerProps>(
   (props, ref) => {
     const { colorKey } = props;
     const theme = useTheme();
     const [isVisible, setIsVisible] = useState(false);
-    const {
-      states: { colors, totalOpened, isPickerShown },
-      actions: {
-        previewColor,
-        saveChangeColor,
-        cancelChangeColor,
-        setTotalOpened,
-      },
-    } = useAppContext();
+    const { colors, isPickerShown, totalOpened } = useAppState();
 
     const togglePicker = useCallback(() => {
       setIsVisible(prev => {
@@ -110,7 +109,7 @@ const Picker = forwardRef<PickerHandler, PickerProps>(
         }
         previewColor(colorKey, color.hex);
       },
-      [colorKey],
+      [colors, colorKey],
     );
 
     const handleSave = useCallback(() => {
@@ -201,9 +200,7 @@ const ColorPicker = memo<ColorPickerProps>(({ colorKey, label }) => {
   const buttonId = `color-picker-btn__${colorKey}`;
   const labelId = `color-picker-label__${colorKey}`;
 
-  const {
-    states: { isPickerShown },
-  } = useAppContext();
+  const { isPickerShown } = useAppState();
 
   const handleClickColor = useCallback(() => {
     if (pickerRef.current) pickerRef.current.togglePicker();

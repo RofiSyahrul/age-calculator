@@ -3,7 +3,7 @@ import { useEffect, useMemo, useReducer, useRef } from 'react';
 import { produce } from 'immer';
 import isEqual from 'react-fast-compare';
 
-import { useAppContext } from 'src/context';
+import { useAppState } from 'src/store';
 import { decode } from 'src/utils/codec';
 import { getAge, getMaxDaysInMonth } from 'src/utils/helpers';
 
@@ -95,9 +95,7 @@ function parseRunningText(rawText: string, year?: number) {
 }
 
 export const useAge = (): HookReturn => {
-  const {
-    states: { birthDate, isPickerShown, specialSetting },
-  } = useAppContext();
+  const { birthDate, isPickerShown, specialSetting } = useAppState();
   const prevBirthDateRef = useRef(birthDate);
 
   const { confettiLive, runningTexts } = specialSetting || {};

@@ -31,12 +31,19 @@ export function setLocalStorage(
         resolve('OK');
       });
     } catch {
-      if (typeof localStorage === 'undefined') return;
-      if (!value) {
-        localStorage.removeItem(key);
+      if (typeof localStorage === 'undefined') {
+        resolve('');
         return;
       }
+
+      if (!value) {
+        localStorage.removeItem(key);
+        resolve('');
+        return;
+      }
+
       localStorage.setItem(key, value);
+      resolve('');
     }
   });
 }
@@ -55,8 +62,7 @@ export function getSpecialSetting(
   const specialSetting = specialData[encodedName];
   if (!specialSetting) return null;
 
-  specialSetting.dob = decode(specialSetting.dob);
-  return specialSetting;
+  return { ...specialSetting, dob: decode(specialSetting.dob) };
 }
 
 export async function getDob(): Promise<string> {

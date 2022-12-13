@@ -1,10 +1,8 @@
-import React from 'react';
-
 import styled from 'styled-components';
 
 import Button from '@atoms/button';
 import { SettingIcon } from '@atoms/icon';
-import { useAppContext } from 'src/context';
+import { appAction, useAppState } from 'src/store';
 import colorVars from 'src/utils/color-vars';
 import { pickersWidth } from 'src/utils/constants';
 
@@ -33,15 +31,12 @@ const StyledButton = styled(Button)`
 const buttonTitle = 'Open picker setting';
 
 export default function SettingButton() {
-  const {
-    states: { isPickerShown },
-    actions: { togglePicker },
-  } = useAppContext();
+  const { isPickerShown } = useAppState();
 
   return (
     <StyledButton
       $bg={colorVars.primary}
-      onClick={togglePicker}
+      onClick={appAction.togglePicker}
       aria-hidden={isPickerShown}
       title={buttonTitle}
       aria-label={buttonTitle}

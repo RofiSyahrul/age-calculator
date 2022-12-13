@@ -12,7 +12,6 @@ import Footer from '@molecules/footer';
 import GlobalStyle from 'src/assets/styles';
 import theme from 'src/assets/theme';
 import { manifest } from 'src/config';
-import { AppContext, useAppState } from 'src/context';
 import singleLineNoSpace from 'src/utils/single-line-no-space';
 
 const { description, name, theme_color: themeColor } = manifest;
@@ -87,18 +86,12 @@ function AppHeadContent() {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { states, actions } = useAppState(
-    (pageProps as AppPageProps).special,
-  );
-
   return (
-    <AppContext.Provider value={{ states, actions }}>
-      <ThemeProvider theme={theme}>
-        <AppHeadContent />
-        <GlobalStyle />
-        <Component {...pageProps} />
-        <Footer />
-      </ThemeProvider>
-    </AppContext.Provider>
+    <ThemeProvider theme={theme}>
+      <AppHeadContent />
+      <GlobalStyle />
+      <Component {...pageProps} />
+      <Footer />
+    </ThemeProvider>
   );
 }

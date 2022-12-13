@@ -20,7 +20,8 @@
     "react-date-picker": "9.1.0",
     "react-dom": "18.2.0",
     "react-fast-compare": "3.2.0",
-    "styled-components": "5.3.6"
+    "styled-components": "5.3.6",
+    "zustand": "4.1.5"
   },
   "description": "Age Calculator and Updater as Chrome Extension by Rofi",
   "devDependencies": {

@@ -1,12 +1,10 @@
-import React from 'react';
-
 import styled from 'styled-components';
 
 import Button from '@atoms/button';
 import { CloseIcon } from '@atoms/icon';
 import BirthdatePicker from '@molecules/birthdate-picker';
 import ColorPicker from '@molecules/color-picker';
-import { useAppContext } from 'src/context';
+import { appAction, useAppState } from 'src/store';
 import colorVars from 'src/utils/color-vars';
 import { pickersWidth } from 'src/utils/constants';
 
@@ -89,17 +87,14 @@ const ResetButton = styled(Button)`
 const buttonTitle = 'Close picker setting';
 
 export default function Pickers() {
-  const {
-    states: { isDefaultColors, isPickerShown },
-    actions: { resetColors, togglePicker },
-  } = useAppContext();
+  const { isDefaultColors, isPickerShown } = useAppState();
 
   return (
     <Aside aria-hidden={!isPickerShown}>
       <ActionWrapper aria-hidden={!isPickerShown}>
         <CloseButton
           $bg='transparent'
-          onClick={togglePicker}
+          onClick={appAction.togglePicker}
           title={buttonTitle}
           aria-label={buttonTitle}
         >
@@ -112,7 +107,7 @@ export default function Pickers() {
       ))}
       <ResetButton
         $bg={colorVars.secondary}
-        onClick={resetColors}
+        onClick={appAction.resetColors}
         disabled={isDefaultColors}
       >
         Reset colors to default

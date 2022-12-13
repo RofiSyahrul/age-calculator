@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/RofiSyahrul/age-calculator/compare/v2.4.3...v3.0.0) (2022-12-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade all dependencies and dev dependencies to latest version
+
+### Features
+
+* migrate to manifest v3 chrome extension ([b9937d5](https://github.com/RofiSyahrul/age-calculator/commit/b9937d5406217eb2b98b7bff9b6155e27e76ac7b))
+* upgrade all dependencies and dev dependencies to latest version ([8c8f918](https://github.com/RofiSyahrul/age-calculator/commit/8c8f9181fbd3ebda172746f090111d3bdf47568b))
+
+
+### Improvements
+
+* migrate state management from context to zustand ([4abdc85](https://github.com/RofiSyahrul/age-calculator/commit/4abdc85c4b3bb1d3dc30b58286d2826cf7826d13))
+
 ### [2.4.3](https://github.com/RofiSyahrul/age-calculator/compare/v2.4.2...v2.4.3) (2022-03-17)
 
 

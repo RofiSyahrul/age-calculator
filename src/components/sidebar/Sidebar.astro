@@ -1,0 +1,87 @@
+---
+import ToggleSidebarButton from '../ToggleSidebarButton.svelte';
+---
+
+<aside>
+  <div>
+    <ToggleSidebarButton
+      class='close-btn'
+      title='Close Sidebar'
+      client:idle
+    >
+      <svg
+        aria-label='Close Icon'
+        xmlns='http://www.w3.org/2000/svg'
+        xmlns:xlink='http://www.w3.org/1999/xlink'
+        width='32'
+        height='32'
+        viewBox='0 0 32 32'
+      >
+        <g fill='none'>
+          <path fill='none' d='M0 0H32V32H0z'></path>
+          <path
+            fill='currentcolor'
+            d='M24 8c.187.186.292.44.292.703 0 .264-.105.517-.292.704l-5.893 5.926c-.387.392-.387 1.022 0 1.414L24 22.6c.299.398.259.955-.093 1.307s-.909.392-1.307.093l-5.893-5.893c-.392-.387-1.022-.387-1.414 0L9.4 24c-.331.442-.958.531-1.4.2-.442-.331-.531-.958-.2-1.4.06-.073.127-.14.2-.2l5.893-5.893c.387-.392.387-1.022 0-1.414L8 9.4c-.442-.331-.531-.958-.2-1.4.331-.442.958-.531 1.4-.2.073.06.14.127.2.2l5.893 5.893c.392.387 1.022.387 1.414 0L22.6 8c.185-.186.437-.291.7-.291.263 0 .515.105.7.291z'
+          ></path>
+        </g>
+      </svg>
+    </ToggleSidebarButton>
+  </div>
+</aside>
+
+<style lang='scss'>
+  aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebar-width);
+    max-width: 100%;
+    height: 100%;
+    padding: 16px;
+    overflow: hidden;
+    background-color: var(--color-primary);
+    transform: translateX(-100%);
+    transition: inherit;
+    transition-property: transform;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transition: inherit;
+    transition-property: opacity;
+  }
+
+  .close-btn {
+    --bg-btn: transparent;
+
+    min-height: 2rem;
+    padding: 0;
+    color: var(--color-text);
+
+    &:hover,
+    &:focus {
+      color: var(--color-secondary);
+    }
+  }
+
+  @include sidebar-open {
+    aside {
+      z-index: 1200;
+      overflow: auto;
+      box-shadow: var(--shadow-high);
+      transform: translateX(0);
+    }
+
+    div {
+      opacity: 1;
+    }
+  }
+</style>

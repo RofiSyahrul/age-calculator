@@ -1,0 +1,38 @@
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  font-family: var(--font-family);
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  background: var(--bg-btn, var(--blue));
+  background-position: center;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background: var(--bg-btn, var(--blue))
+      radial-gradient(
+        circle,
+        rgb(0 0 0 / 3%) 1%,
+        rgb(255 255 255 / 5%) 1%
+      )
+      center/15000%;
+    filter: brightness(95%);
+  }
+
+  &:active {
+    background-size: 100%;
+    transition: background 0s;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: opacity(35%);
+  }
+}

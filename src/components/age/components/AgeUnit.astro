@@ -1,0 +1,100 @@
+---
+import type { AgeKey } from '~/types/age';
+
+import UnitLabel from './UnitLabel.svelte';
+import UnitValue from './UnitValue.svelte';
+
+export interface Props {
+  unit: AgeKey;
+}
+
+const { unit } = Astro.props;
+---
+
+<div class='age-unit'>
+  <div class='unit-value'>
+    <UnitValue client:load unit={unit} />
+  </div>
+  <div class='unit-label'>
+    <UnitLabel client:load unit={unit} />
+  </div>
+</div>
+
+<style lang='scss'>
+  .age-unit {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 100%;
+  }
+
+  .unit-value {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+    height: 75%;
+    padding: 4px;
+    color: var(--color-secondary);
+    font-weight: bold;
+    font-size: 75px;
+    line-height: 1.3em;
+    text-align: center;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: var(--shadow-high);
+    transform: translateX(-50%);
+
+    @include sm {
+      font-size: 45px;
+    }
+
+    @include xs {
+      font-size: 30px;
+    }
+  }
+
+  .unit-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 25%;
+    margin-top: 4px;
+    color: var(--color-secondary);
+    font-size: 30px;
+    line-height: 1.3em;
+    text-align: center;
+
+    @include sm {
+      font-size: 18px;
+    }
+
+    @include xs {
+      font-size: 12px;
+    }
+  }
+
+  @include sidebar-open {
+    @include md {
+      .unit-value {
+        font-size: 52px;
+      }
+
+      .unit-label {
+        font-size: 24px;
+      }
+    }
+  }
+</style>

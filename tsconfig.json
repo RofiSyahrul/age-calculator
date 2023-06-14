@@ -1,3 +1,22 @@
 {
-  "extends": "astro/tsconfigs/strict"
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "paths": {
+      "~/*": ["src/*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "extends": "astro/tsconfigs/strict",
+  "include": [
+    ".eslintrc.cjs",
+    ".prettierrc.cjs",
+    ".stylelintrc.cjs",
+    "astro.config.mjs",
+    "postcss.config.cjs",
+    "svelte.config.js",
+    "src/**/*.astro",
+    "src/**/*.svelte",
+    "**/*.ts"
+  ]
 }

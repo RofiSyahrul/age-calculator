@@ -1,0 +1,83 @@
+---
+import type { AgeKey } from '~/types/age';
+
+import AgeUnit from './components/AgeUnit.astro';
+
+const ageUnitsMajor: AgeKey[] = ['year', 'month', 'day'];
+const ageUnitsMinor: AgeKey[] = ['hour', 'minute', 'second'];
+---
+
+<main>
+  <h1>Age</h1>
+  <div class='age-unit-major'>
+    {ageUnitsMajor.map(unit => <AgeUnit unit={unit} />)}
+  </div>
+  <div class='age-unit-minor'>
+    {ageUnitsMinor.map(unit => <AgeUnit unit={unit} />)}
+  </div>
+</main>
+
+<style lang='scss'>
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: calc(100vh - 88px);
+    opacity: 1;
+    transition: inherit;
+    transition-property: opacity, width;
+  }
+
+  h1 {
+    color: var(--color-secondary);
+    font-weight: bold;
+    font-size: 88px;
+    line-height: 1.3em;
+
+    @include sm {
+      font-size: 65px;
+    }
+
+    @include xs {
+      font-size: 39px;
+    }
+  }
+
+  .age-unit-major,
+  .age-unit-minor {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    width: 100%;
+  }
+
+  .age-unit-major {
+    justify-content: space-between;
+    max-width: 700px;
+    padding: 16px 8px;
+  }
+
+  .age-unit-minor {
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  @include sidebar-open {
+    main {
+      width: calc(100% - var(--sidebar-width));
+
+      @include md {
+        h1 {
+          font-size: 80px;
+        }
+      }
+
+      @include sm {
+        opacity: 0;
+      }
+    }
+  }
+</style>

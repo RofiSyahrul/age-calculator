@@ -1,38 +1,75 @@
 {
-  "editor.tabSize": 2,
+  "[astro]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "typescript.preferences.quoteStyle": "single"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.suggest.insertMode": "replace"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.suggest.insertMode": "replace",
+    "gitlens.codeLens.scopes": ["document"]
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode",
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "gitlens.codeLens.scopes": ["document"]
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll": true
+  },
+  "editor.formatOnSave": true,
   "editor.insertSpaces": true,
   "editor.renderWhitespace": "boundary",
   "editor.rulers": [70],
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.tslint": true
-  },
-  "files.encoding": "utf8",
-  "files.trimTrailingWhitespace": true,
-  "files.insertFinalNewline": true,
-  "search.exclude": {
-    "public/**": true,
-    "node_modules/**": true
-  },
+  "editor.tabSize": 2,
   "eslint.validate": [
+    "astro",
+    "svelte",
     "javascript",
     "javascriptreact",
     "typescript",
     "typescriptreact"
   ],
-  "typescript.tsdk": "./node_modules/typescript/lib",
-  "workbench.colorCustomizations": {},
-  "html.autoClosingTags": true,
   "extensions.ignoreRecommendations": false,
   "files.autoSave": "off",
+  "files.encoding": "utf8",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "html.autoClosingTags": true,
   "rewrap.wrappingColumn": 75,
-  "codemetrics.nodeconfiguration.JsxSelfClosingElement": 0,
-  "codemetrics.nodeconfiguration.ReturnStatement": 0,
-  "codemetrics.nodeconfiguration.DefaultClause": 0,
-  "codemetrics.nodeconfiguration.CaseClause": 0,
-  "codemetrics.nodeconfiguration.SwitchStatement": 0,
-  "codemetrics.nodeconfiguration.BreakStatement": 0,
-  "codemetrics.nodeconfiguration.ObjectLiteralExpression": 0,
-  "codemetrics.nodeconfiguration.ArrowFunction": 0
+  "search.exclude": {
+    "node_modules/**": true,
+    "public/**": true
+  },
+  "stylelint.validate": ["html", "astro", "scss", "svelte"],
+  "workbench.colorCustomizations": {}
 }

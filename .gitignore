@@ -1,5 +1,7 @@
 # build output
 dist/
+public/manifest.json
+ext/
 
 # generated types
 .astro/

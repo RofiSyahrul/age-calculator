@@ -1,0 +1,52 @@
+<footer>
+  <p>
+    {`Copyright © ${new Date().getFullYear()} `}
+    <a href={import.meta.env.REPOSITORY_URL} target='_blank'>Rofi</a>
+    {'.'}
+  </p>
+  <p>{`v${import.meta.env.APP_VERSION}`}</p>
+</footer>
+
+<style lang='scss'>
+  footer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 16px;
+    transition: inherit;
+    transition-property: width, opacity, transform;
+
+    p {
+      color: var(--color-text);
+      font-size: 20px;
+      line-height: 1.3em;
+      text-align: center;
+
+      @include xs {
+        font-size: 14px;
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1.5px;
+      text-decoration-style: wavy;
+    }
+  }
+
+  @include sidebar-open {
+    footer {
+      width: calc(100% - var(--sidebar-width));
+      transform: translateX(var(--sidebar-width));
+
+      @include sm {
+        opacity: 0;
+      }
+    }
+  }
+</style>

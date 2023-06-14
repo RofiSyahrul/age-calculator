@@ -1,36 +1,111 @@
 ---
+import '~/styles/_global.scss';
+import '~/styles/button.scss';
+
+import {
+  DEFAULT_COLOR_BACKGROUND,
+  DEFAULT_COLOR_PRIMARY,
+  DEFAULT_COLOR_SECONDARY,
+  DEFAULT_COLOR_TEXT,
+} from '~/config/colors';
+
 export interface Props {
-	title: string;
+  canonicalURL?: string;
+  description?: string;
+  imageURL?: string;
+  title: string;
 }
 
-const { title } = Astro.props;
+const {
+  canonicalURL = import.meta.env.SITE,
+  description = import.meta.env.DESCRIPTION,
+  imageURL = 'https://res.cloudinary.com/rofi/image/upload/v1640233522/samples/rho-pi.png',
+  title,
+} = Astro.props;
+
+const faviconURL = '/favicon.ico';
 ---
 
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description">
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html
+  lang='en'
+  style={{
+    '--bg': DEFAULT_COLOR_BACKGROUND,
+    '--p': DEFAULT_COLOR_PRIMARY,
+    '--s': DEFAULT_COLOR_SECONDARY,
+    '--t': DEFAULT_COLOR_TEXT,
+  }}
+>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='x-UA-Compatible' content='ie=edge' />
+    <meta name='generator' content={Astro.generator} />
+    <meta
+      name='viewport'
+      content='width=device-width,initial-scale=1.0'
+    />
+
+    <link rel='icon' href={faviconURL} />
+    <link rel='manifest' href='/manifest.json' />
+    <link rel='canonical' href={canonicalURL} />
+    <title>{title}</title>
+
+    <link rel='apple-touch-icon' href={faviconURL} />
+
+    <meta property='og:type' content='website' />
+    <meta property='og:title' content={title} />
+    <meta property='og:image' content={imageURL} />
+    <meta property='og:url' content={canonicalURL} />
+    <meta property='og:description' content={description} />
+
+    <meta name='description' content={description} />
+    <meta name='author' content='Rofi' />
+    <meta name='image' content={imageURL} />
+    <meta
+      name='keywords'
+      content='chrome, extension, chrome extension, age calculator, calculate your age'
+    />
+
+    <meta name='mobile-web-app-capable' content='yes' />
+    <meta name='apple-mobile-web-app-capable' content='yes' />
+    <meta
+      name='apple-mobile-web-app-title'
+      content={import.meta.env.APP_NAME}
+    />
+    <meta
+      name='apple-mobile-web-app-status-bar-style'
+      content='black-translucent'
+    />
+    <meta name='apple-touch-icon' content={faviconURL} />
+    <meta
+      name='application-name'
+      content={import.meta.env.APP_NAME}
+    />
+    <meta name='theme-color' content={import.meta.env.THEME_COLOR} />
+    <meta
+      name='msapplication-TileColor'
+      content={import.meta.env.THEME_COLOR}
+    />
+
+    <meta name='twitter:title' content={title} />
+    <meta name='twitter:description' content={description} />
+    <meta name='twitter:image' content={imageURL} />
+    <meta name='twitter:creator' content='@RofiSyahrul' />
+    <meta name='twitter:dnt' content='on' />
+    <meta name='twitter:card' content='summary_large_image' />
+
+    {
+      !import.meta.env.IS_EXTENSION && (
+        <meta
+          name='google-site-verification'
+          content='NUXK5NcVGFp_nAVVgvjMZYHSC2ZvTsva-XCCzJ85hvA'
+        />
+      )
+    }
+
+    <slot name='head' />
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
-<style is:global>
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>

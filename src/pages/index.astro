@@ -1,81 +1,85 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Age from '~/components/age/Age.astro';
+import Footer from '~/components/Footer.astro';
+import Sidebar from '~/components/sidebar/Sidebar.astro';
+import ToggleSidebarButton from '~/components/ToggleSidebarButton.svelte';
+import Layout from '~/layouts/Layout.astro';
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
+<Layout
+  title={import.meta.env.IS_EXTENSION
+    ? 'New Tab'
+    : 'Calculate your age'}
+>
+  <Age />
+  <Sidebar />
+  <ToggleSidebarButton
+    class='setting-btn'
+    title='Open Sidebar'
+    client:idle
+  >
+    <svg
+      aria-label='Setting Icon'
+      xmlns='http://www.w3.org/2000/svg'
+      xmlns:xlink='http://www.w3.org/1999/xlink'
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
+    >
+      <path
+        fill='currentcolor'
+        d='M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z'
+      ></path>
+    </svg>
+  </ToggleSidebarButton>
+  <Footer />
 </Layout>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
+<script>
+  import { subscribeSidebarStore } from '~/stores/sidebar';
+
+  subscribeSidebarStore();
+</script>
+
+<style is:global>
+  body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 8px;
+    background-color: var(--color-background);
+    transition-timing-function: ease-in;
+    transition-duration: 400ms;
+    transition-property: width, padding;
+  }
+</style>
+
+<style lang='scss'>
+  .setting-btn {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1050;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0 8px;
+    color: var(--color-secondary);
+    box-shadow: var(--shadow-high);
+    transition: inherit;
+    transition-property: transform, opacity;
+
+    --bg-btn: var(--color-primary);
+  }
+
+  @include sidebar-open {
+    .setting-btn {
+      z-index: 0;
+      transform: translateX(min(var(--sidebar-width), 100vw))
+        translateX(-100%) translateX(-32px);
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
 </style>

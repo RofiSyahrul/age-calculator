@@ -13,6 +13,7 @@
     rgb(0 0 0 / 15%) 0px 8px 16px;
   --shadow-high: 0 1px 8px 8px rgb(0 0 0 / 50%);
   --sidebar-width: 320px;
+  --picker-width: 280px;
   --font-family: -apple-system, system-ui, blinkmacsystemfont,
     'Segoe UI', roboto, oxygen, ubuntu, cantarell, 'Fira Sans',
     'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -39,6 +40,10 @@ p {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  transition: inherit;
 }
 
 @media (max-width: 649.95px) {

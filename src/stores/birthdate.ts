@@ -15,7 +15,7 @@ import {
 } from '~/utils/date';
 
 const DEFAULT_BIRTHDATE = '1997-06-18T00:00:00+07:00';
-export const birthdate = writable<Date | null>(
+export const birthdate = writable<Date | undefined>(
   new Date(DEFAULT_BIRTHDATE),
 );
 
@@ -67,7 +67,7 @@ function getRemainingDaysUnderAMonth(
   return getDaysDiff(currentDate, lastMonth);
 }
 
-function getAgeDetail(dateOfBirth: Date | null): AgeDetail {
+function getAgeDetail(dateOfBirth?: Date): AgeDetail {
   if (!dateOfBirth) return {};
 
   const now = new Date();
@@ -80,7 +80,7 @@ function getAgeDetail(dateOfBirth: Date | null): AgeDetail {
   return ageDetail;
 }
 
-function getMaxDaysInCurrentMonth(dateOfBirth: Date | null): number {
+function getMaxDaysInCurrentMonth(dateOfBirth?: Date): number {
   if (!dateOfBirth) return 30;
 
   const now = new Date();

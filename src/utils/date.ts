@@ -59,3 +59,16 @@ export function getMonthDiff(from: Date, to: Date): number {
 
   return +(-(wholeMonthDiff + diffOfset) || 0);
 }
+
+function zeroPad(value: number): string {
+  return value.toString().padStart(2, '0');
+}
+
+export function formatDate(date?: Date): string {
+  if (!date) return '';
+  return [
+    zeroPad(date.getDate()),
+    zeroPad(date.getMonth() + 1),
+    date.getFullYear(),
+  ].join('-');
+}

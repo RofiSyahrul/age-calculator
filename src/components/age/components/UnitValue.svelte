@@ -9,5 +9,5 @@
 </script>
 
 <span class={className}>
-  {$age[unit]}
+  {$age[unit] ?? ''}
 </span>

@@ -2,12 +2,7 @@
 import '~/styles/_global.scss';
 import '~/styles/button.scss';
 
-import {
-  DEFAULT_COLOR_BACKGROUND,
-  DEFAULT_COLOR_PRIMARY,
-  DEFAULT_COLOR_SECONDARY,
-  DEFAULT_COLOR_TEXT,
-} from '~/config/colors';
+import { DEFAULT_COLORS } from '~/config/colors';
 
 export interface Props {
   canonicalURL?: string;
@@ -30,10 +25,10 @@ const faviconURL = '/favicon.ico';
 <html
   lang='en'
   style={{
-    '--bg': DEFAULT_COLOR_BACKGROUND,
-    '--p': DEFAULT_COLOR_PRIMARY,
-    '--s': DEFAULT_COLOR_SECONDARY,
-    '--t': DEFAULT_COLOR_TEXT,
+    '--bg': DEFAULT_COLORS.background,
+    '--p': DEFAULT_COLORS.primary,
+    '--s': DEFAULT_COLORS.secondary,
+    '--t': DEFAULT_COLORS.text,
   }}
 >
   <head>

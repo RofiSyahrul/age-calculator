@@ -14,10 +14,7 @@ import {
   getMonthDiff,
 } from '~/utils/date';
 
-const DEFAULT_BIRTHDATE = '1997-06-18T00:00:00+07:00';
-export const birthdate = writable<Date | undefined>(
-  new Date(DEFAULT_BIRTHDATE),
-);
+export const birthdate = writable<Date | undefined>();
 
 export function changeBirthdate(date: Date) {
   birthdate.set(date);
@@ -36,14 +33,14 @@ function getAgeDetailForOneDay(
   dateOfBirth: Date,
 ): AgeDetail {
   const ageDetail: AgeDetail = {};
-  let value = absFloor(
+  let diff = absFloor(
     (currentDate.getTime() - dateOfBirth.getTime()) / MS_A_SECOND,
   );
 
   ONE_DAY_UNITS.forEach((unit, index) => {
     const conversion = ONE_DAY_UNIT_CONVERSIONS[index];
-    const remaining = (ageDetail[unit] = value % conversion);
-    value = (value - remaining) / conversion;
+    const remaining = (ageDetail[unit] = diff % conversion);
+    diff = (diff - remaining) / conversion;
   });
 
   return ageDetail;

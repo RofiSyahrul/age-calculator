@@ -36,9 +36,16 @@ import Layout from '~/layouts/Layout.astro';
 </Layout>
 
 <script>
+  import { birthdate } from '~/stores/birthdate';
   import { subscribeSidebarStore } from '~/stores/sidebar';
+  import { getStorageValues } from '~/utils/storage';
 
   subscribeSidebarStore();
+
+  (async () => {
+    const storageValues = await getStorageValues();
+    birthdate.set(storageValues.dob);
+  })();
 </script>
 
 <style is:global>

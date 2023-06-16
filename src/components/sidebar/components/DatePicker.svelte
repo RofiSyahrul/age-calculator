@@ -7,6 +7,7 @@
 
   import { birthdate } from '~/stores/birthdate';
   import { formatDate } from '~/utils/date';
+  import { setStorageValue } from '~/utils/storage';
 
   let className = '';
   export { className as class };
@@ -44,9 +45,10 @@
     );
   }
 
-  $: if ($calendarStore?.hasChosen) {
+  $: if ($calendarStore?.hasChosen && $calendarStore?.selected) {
     isOpen = false;
     $calendarStore.hasChosen = false;
+    setStorageValue('dob', $calendarStore.selected);
   }
 </script>
 
@@ -93,8 +95,6 @@
     border-radius: 8px;
     box-shadow: var(--shadow-medium);
     cursor: pointer;
-    opacity: 0;
-    transition-property: opacity;
 
     button {
       --bg-btn: transparent;
@@ -122,12 +122,10 @@
       :global(.controls) {
         border-radius: 8px 8px 0 0;
       }
-    }
-  }
 
-  @include sidebar-open {
-    .trigger {
-      opacity: 1;
+      :global(a) {
+        user-select: none;
+      }
     }
   }
 </style>

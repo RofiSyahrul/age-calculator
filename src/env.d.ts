@@ -1,4 +1,5 @@
 /// <reference types="astro/client" />
+/// <reference types="chrome" />
 
 interface InjectedMetaEnv {
   readonly APP_VERSION: string;

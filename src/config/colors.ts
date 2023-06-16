@@ -1,4 +1,8 @@
-export const DEFAULT_COLOR_BACKGROUND = '#151f22';
-export const DEFAULT_COLOR_PRIMARY = '#28476c';
-export const DEFAULT_COLOR_SECONDARY = '#4aabc5';
-export const DEFAULT_COLOR_TEXT = '#daecf2';
+import type { ColorName } from '~/types/colors';
+
+export const DEFAULT_COLORS: Record<ColorName, string> = {
+  background: '#151f22',
+  primary: '#28476c',
+  secondary: '#4aabc5',
+  text: '#daecf2',
+};

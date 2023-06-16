@@ -4,6 +4,7 @@
 
   import type { ColorName } from '~/types/colors';
   import { colors } from '~/stores/colors';
+  import { getStorageValue, setStorageValue } from '~/utils/storage';
 
   interface RawA11yColor {
     name: ColorName;
@@ -16,7 +17,36 @@
   export let description = '';
 
   let isOpen = false;
+  let shouldCancel = false;
+  let shouldSave = false;
   let Picker: typeof import('./Picker.svelte').default;
+
+  function closePicker() {
+    isOpen = false;
+    shouldCancel = true;
+  }
+
+  function handleClickTriggerButton() {
+    if (isOpen) return closePicker();
+    isOpen = true;
+  }
+
+  async function handleSave() {
+    await setStorageValue(colorName, $colors[colorName]);
+    shouldSave = false;
+  }
+
+  async function handleCancel() {
+    const storageValue = await getStorageValue(colorName);
+    $colors[colorName] = storageValue;
+    shouldCancel = false;
+  }
+
+  $: if (shouldSave) {
+    handleSave();
+  } else if (shouldCancel) {
+    handleCancel();
+  }
 
   const buttonID = `color-picker-trigger__${colorName}`;
   const descriptionID = `color-picker-description__${colorName}`;
@@ -41,7 +71,6 @@
   $: a11yColors = a11yColorsMapping[colorName].map<A11yColor>(
     ({ name, isTextColor }) => ({
       hex: $colors[name],
-      // placeholder: ,
       reverse: isTextColor,
     }),
   );
@@ -55,7 +84,7 @@
 
 <div
   use:blurr
-  on:blurr={() => (isOpen = false)}
+  on:blurr={closePicker}
   class={className}
   class:color-picker={true}
 >
@@ -64,7 +93,7 @@
       aria-labelledby={descriptionID}
       id={buttonID}
       style:--bg-btn={`var(--color-${colorName})`}
-      on:click={() => (isOpen = !isOpen)}
+      on:click={handleClickTriggerButton}
     />
     <div id={descriptionID}>{description}</div>
   </label>
@@ -72,8 +101,10 @@
   {#if Picker}
     <svelte:component
       this={Picker}
-      {isOpen}
       {a11yColors}
+      bind:isOpen
+      bind:shouldCancel
+      bind:shouldSave
       bind:hex={$colors[colorName]}
     />
   {/if}

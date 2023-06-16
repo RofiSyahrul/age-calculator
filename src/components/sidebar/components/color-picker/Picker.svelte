@@ -24,6 +24,8 @@
   export let a11yColors: A11yColor[] = [{ hex: '#ffffff' }];
   export let hex: string;
   export let isOpen: boolean;
+  export let shouldCancel: boolean;
+  export let shouldSave: boolean;
 
   let color = colord(hex);
   let hsv = color.toHsv();
@@ -52,6 +54,16 @@
     sliderWrapper: SliderWrapper,
     textInput: TextInput,
   } as unknown as Components;
+
+  function handleCancel() {
+    shouldCancel = true;
+    isOpen = false;
+  }
+
+  function handleSave() {
+    shouldSave = true;
+    isOpen = false;
+  }
 
   function updateColor() {
     let isUpdated = false;
@@ -122,6 +134,10 @@
     {isA11yClosable}
     {isA11yOpen}
   />
+  <div>
+    <button class="cancel-btn" on:click={handleCancel}>Cancel</button>
+    <button class="save-btn" on:click={handleSave}>Save</button>
+  </div>
 </dialog>
 
 <style lang="scss">
@@ -177,6 +193,33 @@
 
       :global(a) {
         color: var(--color-secondary);
+      }
+    }
+
+    div {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      width: 100%;
+      padding: 8px 5px;
+
+      .cancel-btn,
+      .save-btn {
+        min-width: 70px;
+        padding: 8px;
+      }
+
+      .cancel-btn {
+        --bg-btn: var(--color-background);
+
+        color: var(--color-text);
+        border: 1px solid var(--color-text);
+      }
+
+      .save-btn {
+        --bg-btn: var(--color-secondary);
+
+        color: var(--color-primary);
       }
     }
   }

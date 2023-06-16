@@ -15,7 +15,7 @@ export function encode(value: string): string {
     newStr += String.fromCharCode(charCode);
   }
 
-  return newStr + numberOfEqualSign;
+  return newStr + String(numberOfEqualSign);
 }
 
 export function decode(hash: string): string {

@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 import fs from 'fs';
 import path from 'path';
 
+import { manifest } from './config';
 import packageJson from '../package.json';
-import { manifest } from '../src/config';
 
 const { version } = packageJson;
 const jsonContent = JSON.stringify({ ...manifest, version }, null, 2);

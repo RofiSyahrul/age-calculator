@@ -6,14 +6,13 @@
   --color-secondary: var(--s);
   --color-text: var(--t);
   --blue: #37a0f4;
-  --white: #fff;
-  --red: #ec4d3a;
   --shadow-low: 0px 2px 8px -2px rgb(0 0 0 / 16%);
   --shadow-medium: rgb(0 0 0 / 15%) 0px 0px 0px 1px,
     rgb(0 0 0 / 15%) 0px 8px 16px;
   --shadow-high: 0 1px 8px 8px rgb(0 0 0 / 50%);
   --sidebar-width: 320px;
-  --picker-width: 280px;
+  --popover-width: 280px;
+  --popover-z-index: 10;
   --font-family: -apple-system, system-ui, blinkmacsystemfont,
     'Segoe UI', roboto, oxygen, ubuntu, cantarell, 'Fira Sans',
     'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -42,32 +41,13 @@ p {
   -moz-osx-font-smoothing: grayscale;
 }
 
+dialog {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
 * {
   transition: inherit;
-}
-
-@media (max-width: 649.95px) {
-  footer p,
-  main h1,
-  .age-unit span {
-    transition-property: transform;
-  }
-}
-
-[data-sidebar-open] {
-  footer p,
-  main h1,
-  .age-unit span {
-    @media (max-width: 649.95px) {
-      transform: scale(0.8);
-    }
-
-    @media (max-width: 599.95px) {
-      transform: scale(0.65);
-    }
-
-    @media (max-width: 549.95px) {
-      transform: scale(0.5);
-    }
-  }
 }

@@ -1,13 +1,44 @@
 ---
+import type { ColorName } from '~/types/colors';
+
 import CloseButton from './components/CloseButton.astro';
+import ColorPicker from './components/color-picker/ColorPicker.svelte';
 import DatePicker from './components/DatePicker.svelte';
+
+const colorData: Array<{
+  colorName: ColorName;
+  description: string;
+}> = [
+  { colorName: 'background', description: 'Background color' },
+  {
+    colorName: 'primary',
+    description: 'Circle and picker color',
+  },
+  {
+    colorName: 'secondary',
+    description: 'Age, units, icons, and numbers color',
+  },
+  { colorName: 'text', description: 'Text color' },
+];
 ---
 
 <aside>
   <div class='close-btn-wrapper'>
     <CloseButton />
   </div>
-  <DatePicker client:idle />
+
+  <DatePicker class='picker' client:idle />
+
+  {
+    colorData.map(({ colorName, description }) => (
+      <ColorPicker
+        colorName={colorName}
+        description={description}
+        class='picker'
+        client:idle
+      />
+    ))
+  }
 </aside>
 
 <style lang='scss'>
@@ -18,7 +49,7 @@ import DatePicker from './components/DatePicker.svelte';
     z-index: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 24px;
     width: var(--sidebar-width);
     max-width: 100%;
     height: 100%;
@@ -35,10 +66,30 @@ import DatePicker from './components/DatePicker.svelte';
     align-items: center;
     justify-content: flex-end;
     width: 100%;
-    margin-bottom: 1rem;
-    opacity: 0;
-    transition: inherit;
-    transition-property: opacity;
+    margin-bottom: 16px;
+  }
+
+  .picker {
+    :global(.trigger) {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      width: 100%;
+      padding: 12px;
+      color: var(--color-text);
+      font-size: 14px;
+      line-height: 1.3em;
+      background-color: var(--color-primary);
+      border-radius: 8px;
+      box-shadow: var(--shadow-high);
+      cursor: pointer;
+
+      &:hover,
+      &:focus-visible,
+      &:focus-within {
+        box-shadow: var(--shadow-medium);
+      }
+    }
   }
 
   @include sidebar-open {
@@ -47,10 +98,6 @@ import DatePicker from './components/DatePicker.svelte';
       overflow: auto;
       box-shadow: var(--shadow-high);
       transform: translateX(0);
-    }
-
-    .close-btn-wrapper {
-      opacity: 1;
     }
   }
 </style>

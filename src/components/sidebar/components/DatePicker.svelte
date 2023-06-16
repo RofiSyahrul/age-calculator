@@ -22,7 +22,7 @@
       colors: {
         background: {
           highlight: 'var(--color-text)',
-          hover: 'var(--color-secondary)',
+          hover: 'var(--color-primary)',
           primary: 'var(--color-background)',
         },
         border: 'transparent',
@@ -32,7 +32,7 @@
         },
       },
       shadow: 'var(--shadow-medium)',
-      width: 'var(--picker-width)',
+      width: 'var(--popover-width)',
     },
   };
 
@@ -58,14 +58,14 @@
   class={className}
   class:datepicker={true}
 >
-  <label class="trigger">
+  <label class="trigger" title="Change birthdate here">
     Birthdate
     <button on:click={() => (isOpen = !isOpen)}>
       {formattedDate}
     </button>
   </label>
   {#if Calendar}
-    <div class="calendar" aria-hidden={!isOpen}>
+    <dialog class="calendar" open={isOpen}>
       <svelte:component
         this={Calendar}
         end={endDate}
@@ -74,7 +74,7 @@
         bind:store={calendarStore}
         bind:selected={$birthdate}
       />
-    </div>
+    </dialog>
   {/if}
 </div>
 
@@ -84,17 +84,7 @@
   }
 
   .trigger {
-    display: flex;
-    gap: 4px;
-    align-items: center;
     justify-content: space-between;
-    width: 100%;
-    padding: 12px;
-    color: var(--color-text);
-    background-color: var(--color-primary);
-    border-radius: 8px;
-    box-shadow: var(--shadow-medium);
-    cursor: pointer;
 
     button {
       --bg-btn: transparent;
@@ -107,13 +97,14 @@
     position: absolute;
     top: 100%;
     left: 0;
-    display: flex;
+    z-index: var(--popover-z-index);
+    display: none;
     justify-content: center;
     width: 100%;
     margin-top: 4px;
 
-    &[aria-hidden='true'] {
-      display: none;
+    &[open] {
+      display: flex;
     }
 
     :global(.grid) {

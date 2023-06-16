@@ -1,8 +1,8 @@
 import type { ColorName } from '~/types/colors';
 
 export const DEFAULT_COLORS: Record<ColorName, string> = {
-  background: '#151f22',
+  background: '#09122d',
   primary: '#28476c',
-  secondary: '#4aabc5',
+  secondary: '#b7eae9',
   text: '#daecf2',
 };

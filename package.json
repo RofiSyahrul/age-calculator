@@ -7,11 +7,14 @@
   "scripts": {
     "astro": "astro",
     "build": "astro build",
-    "build:extension": "BUILD_MODE=extension yarn build",
+    "build:extension": "BUILD_MODE=extension pnpm build",
     "dev": "astro dev --port 1806",
+    "format": "prettier --write **/*.{astro,svelte,cjs,mjs,ts}",
     "generate-manifest": "TS_NODE_PROJECT=tsconfig.node.json ts-node scripts/generate-manifest",
-    "lint": "eslint . --ext .astro,.svelte,.cjs,.mjs,.tsx,.ts --color",
-    "lint:fix": "yarn lint --fix",
+    "lint": "pnpm lint:code && pnpm lint:css",
+    "lint:code": "eslint . --ext .astro,.svelte,.cjs,.mjs,.ts --color",
+    "lint:code:fix": "pnpm lint --fix",
+    "lint:css": "stylelint src/**/*.{astro,css,scss,svelte}",
     "pre-commit": "lint-staged",
     "prepare": "husky install",
     "preview": "astro preview --port 1997",
@@ -21,6 +24,7 @@
   "dependencies": {
     "@astrojs/svelte": "^3.0.0",
     "astro": "^2.6.2",
+    "colord": "^2.9.3",
     "svelte": "^3.55.0",
     "svelte-awesome-color-picker": "^2.4.4",
     "svelte-calendar": "^3.1.6"
@@ -67,6 +71,9 @@
     "*.{astro,svelte,ts,js,mjs,cjs}": [
       "prettier --check",
       "eslint --color"
+    ],
+    "*.{astro,scss,css,svelte}": [
+      "stylelint"
     ]
   },
   "repository": {

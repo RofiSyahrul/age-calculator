@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import fs from 'fs';
 import { readdir } from 'fs/promises';
 import path from 'path';
 
 import * as archiver from 'archiver';
 
-import { name, version } from '../../package.json';
 import { archiveDir, buildDir } from './_paths';
+import { name, version } from '../../package.json';
 
 async function getTargetFileName() {
   const defaultTargetPath = `${name}-${version.replace(/\./g, '-')}`;
@@ -51,7 +56,7 @@ export default async function archiveBuild() {
 
   archive.pipe(output as unknown as NodeJS.WritableStream);
   archive.directory(buildDir, false);
-  archive.finalize();
+  await archive.finalize();
 
   return targetFileName;
 }

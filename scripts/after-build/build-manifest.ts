@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { readFile, writeFile } from 'fs/promises';
 
-import { manifest as manifestConfig } from '../../src/config';
 import { manifestPath } from './_paths';
+import { manifest as manifestConfig } from '../config';
 const { icons } = manifestConfig;
 
 type ManifestForExtension = {

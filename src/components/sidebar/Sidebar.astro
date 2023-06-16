@@ -4,6 +4,7 @@ import type { ColorName } from '~/types/colors';
 import CloseButton from './components/CloseButton.astro';
 import ColorPicker from './components/color-picker/ColorPicker.svelte';
 import DatePicker from './components/DatePicker.svelte';
+import ResetColorButton from './components/ResetColorButton.svelte';
 
 const colorData: Array<{
   colorName: ColorName;
@@ -39,6 +40,8 @@ const colorData: Array<{
       />
     ))
   }
+
+  <ResetColorButton client:idle />
 </aside>
 
 <style lang='scss'>

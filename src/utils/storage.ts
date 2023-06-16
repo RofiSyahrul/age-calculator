@@ -89,6 +89,7 @@ export async function setStorageValue<T extends StorageKey>(
   try {
     await chrome.storage.local.set({ [key]: stringifiedValue });
   } catch (error) {
-    localStorage.setItem(key, stringifiedValue);
+    if (stringifiedValue) localStorage.setItem(key, stringifiedValue);
+    else localStorage.removeItem(key);
   }
 }

@@ -1,20 +1,40 @@
-import { fileURLToPath } from 'url';
+import type { AstroConfig, AstroIntegration } from 'astro';
 
-import type { AstroIntegration } from 'astro';
-
-import { IS_EXTENSION, extensionManifest } from '../config';
+import { archiveDist } from './utils/archive-dist';
+import { copyPublicDir } from './utils/copy-public-dir';
+import { createManifest } from './utils/create-manifest';
+import { moveInlineScripts } from './utils/move-inline-scripts';
+import { updateReadme } from './utils/update-readme';
+import { IS_EXTENSION } from '../config';
 
 export default function createExtension(): AstroIntegration {
+  let astroConfig: AstroConfig;
+
   return {
     name: 'create-extension',
     hooks: {
-      'astro:build:done': ({ dir }) => {
+      'astro:config:done': ({ config }) => {
+        astroConfig = config;
+      },
+      'astro:build:setup': ({ vite }) => {
+        vite.build ??= {};
+        vite.build.copyPublicDir = !IS_EXTENSION;
+      },
+      'astro:build:done': async ({ dir }) => {
         if (!IS_EXTENSION) return;
-        const manifest = structuredClone(extensionManifest);
-        // TODO: create extension
-        console.log('DIR', dir);
-        console.log('DIR PATH', fileURLToPath(dir));
-        console.log('MANIFEST', manifest);
+
+        try {
+          await Promise.all([
+            copyPublicDir(astroConfig.publicDir, dir),
+            createManifest(dir),
+            moveInlineScripts(dir),
+          ]);
+
+          const archivedFilename = await archiveDist(dir);
+          await updateReadme(archivedFilename);
+        } catch (error) {
+          console.log('ERROR on creating extension', error);
+        }
       },
     },
   };

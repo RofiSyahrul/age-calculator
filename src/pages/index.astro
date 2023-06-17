@@ -1,5 +1,6 @@
 ---
 import Age from '~/components/age/Age.astro';
+import BirthdayParty from '~/components/BirthdayParty.svelte';
 import Footer from '~/components/Footer.astro';
 import Sidebar from '~/components/sidebar/Sidebar.astro';
 import ToggleSidebarButton from '~/components/ToggleSidebarButton.svelte';
@@ -32,6 +33,7 @@ import Layout from '~/layouts/Layout.astro';
       ></path>
     </svg>
   </ToggleSidebarButton>
+  <BirthdayParty client:idle />
   <Footer />
 </Layout>
 

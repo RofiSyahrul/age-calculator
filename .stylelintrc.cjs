@@ -58,6 +58,8 @@ module.exports = {
       'fr',
       'vh',
       'vw',
+      'svh',
+      'svw',
     ],
   },
 };

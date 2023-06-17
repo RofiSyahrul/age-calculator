@@ -155,3 +155,7 @@ export const age = derived<typeof birthdate, AgeDetail>(
   },
   {},
 );
+
+export const isBirthdayParty = derived(age, $age => {
+  return $age.day === 0 && $age.month === 0;
+});

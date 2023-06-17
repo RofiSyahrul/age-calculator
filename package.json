@@ -86,5 +86,10 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "source ./scripts/post-bump.sh"
+    }
   }
 }

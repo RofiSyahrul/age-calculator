@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/RofiSyahrul/age-calculator/compare/v3.0.0...v4.0.0) (2023-06-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate to Astro and Svelte
+
+### Features
+
+* add date picker ([0ff95b5](https://github.com/RofiSyahrul/age-calculator/commit/0ff95b5c45220ebea5126b8f232b4be411a3e5a7))
+* add reset button to reset colors store and storage ([a38fa32](https://github.com/RofiSyahrul/age-calculator/commit/a38fa32676b308059576062e90e64441d2a3b1c6))
+* age, footer, and sidebar toggler ([feab86f](https://github.com/RofiSyahrul/age-calculator/commit/feab86fd319b4b5b3fec14d22cf987c39ad6ae7e))
+* create astro integration to create chrome extension ([83ab2a7](https://github.com/RofiSyahrul/age-calculator/commit/83ab2a7e29fe2e5f3e161919a045204cfc2abe60))
+* initial commit from Astro ([c90ede0](https://github.com/RofiSyahrul/age-calculator/commit/c90ede0b8b63db642efcc5e0e8342bfea9824efd))
+* integrate colors store with storage ([82e4c74](https://github.com/RofiSyahrul/age-calculator/commit/82e4c74f0d6bb0f71e94a5a2218a72f209cfc2fe))
+* integrate with color picker ([a46c90b](https://github.com/RofiSyahrul/age-calculator/commit/a46c90bda6a37363c5ed981c40aafa3e29c832f9))
+* show confetti to birthday user ([65e7cb4](https://github.com/RofiSyahrul/age-calculator/commit/65e7cb41a833a1dfa063fb71e98f15bf1c047878))
+* sync birthdate store with storage ([1b2adcf](https://github.com/RofiSyahrul/age-calculator/commit/1b2adcf57f8c6b22dbe3b739e9725115d98ac607))
+
+
+### Improvements
+
+* remove unused old files ([bfa89b4](https://github.com/RofiSyahrul/age-calculator/commit/bfa89b48e2bc1616e522ab29ee07fdd55e54f24c))
+
 ## [3.0.0](https://github.com/RofiSyahrul/age-calculator/compare/v2.4.3...v3.0.0) (2022-12-13)
 
 

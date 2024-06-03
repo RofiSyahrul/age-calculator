@@ -7,6 +7,8 @@ interface InjectedMetaEnv {
   readonly DESCRIPTION: string;
   readonly IS_EXTENSION: boolean;
   readonly REPOSITORY_URL: string;
+  readonly SUPABASE_URL: string;
+  readonly SUPABASE_SECRET: string;
   readonly THEME_COLOR: string;
 }
 

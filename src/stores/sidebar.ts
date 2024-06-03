@@ -2,10 +2,10 @@ import { writable } from 'svelte/store';
 
 const isSidebarOpen = writable(false);
 
-export function subscribeSidebarStore() {
+export function subscribeSidebarStore(doc: Document) {
   return isSidebarOpen.subscribe(isOpen => {
-    if (isOpen) document.body.setAttribute('data-sidebar-open', '');
-    else document.body.removeAttribute('data-sidebar-open');
+    if (isOpen) doc.body.setAttribute('data-sidebar-open', '');
+    else doc.body.removeAttribute('data-sidebar-open');
   });
 }
 

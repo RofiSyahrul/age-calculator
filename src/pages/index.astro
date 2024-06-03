@@ -1,17 +1,40 @@
 ---
 import Age from '~/components/age/Age.astro';
-import BirthdayParty from '~/components/BirthdayParty.svelte';
+import BirthdayParty from '~/components/birthday-party/BirthdayParty.svelte';
 import Footer from '~/components/Footer.astro';
 import Sidebar from '~/components/sidebar/Sidebar.astro';
 import ToggleSidebarButton from '~/components/ToggleSidebarButton.svelte';
 import Layout from '~/layouts/Layout.astro';
+import { SPECIAL_DATA_SCRIPT_ID } from '~/scripts/non-extension-mode';
+import { fetchSpecialData } from '~/services/supabase';
+import type { SpecialData } from '~/types/special';
+
+let specialData: SpecialData | null = null;
+
+const isExtension = import.meta.env.IS_EXTENSION;
+if (!isExtension) {
+  try {
+    specialData = await fetchSpecialData();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to fetch special data', error);
+  }
+}
 ---
 
-<Layout
-  title={import.meta.env.IS_EXTENSION
-    ? 'New Tab'
-    : 'Calculate your age'}
->
+<Layout title={isExtension ? 'New Tab' : 'Calculate your age'}>
+  <Fragment slot='head'>
+    {
+      specialData && (
+        <script
+          id={SPECIAL_DATA_SCRIPT_ID}
+          type='application/json'
+          set:html={JSON.stringify(specialData)}
+        />
+      )
+    }
+  </Fragment>
+
   <Age />
   <Sidebar />
   <ToggleSidebarButton
@@ -38,21 +61,9 @@ import Layout from '~/layouts/Layout.astro';
 </Layout>
 
 <script>
-  import { birthdate } from '~/stores/birthdate';
-  import { colors } from '~/stores/colors';
-  import { subscribeToColorsChange } from '~/stores/colors';
-  import { subscribeSidebarStore } from '~/stores/sidebar';
-  import { getStorageValues } from '~/utils/storage';
+  import init from '~/scripts/init';
 
-  subscribeSidebarStore();
-  subscribeToColorsChange();
-
-  (async () => {
-    const storageValues = await getStorageValues();
-    const { dob, ...storageValuesForColors } = storageValues;
-    birthdate.set(dob);
-    colors.set(storageValuesForColors);
-  })();
+  init(window, document);
 </script>
 
 <style is:global lang='scss'>

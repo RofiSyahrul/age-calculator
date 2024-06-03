@@ -25,13 +25,13 @@ const colorNameToStyleProperty: Record<ColorName, string> = {
   text: '--t',
 };
 
-export function subscribeToColorsChange() {
+export function subscribeToColorsChange(doc: Document) {
   return colors.subscribe(newColors => {
     for (const key in newColors) {
       const colorName = key as ColorName;
       const newColor = newColors[colorName];
       if (newColor !== prevColors[colorName]) {
-        document.documentElement.style.setProperty(
+        doc.documentElement.style.setProperty(
           colorNameToStyleProperty[colorName],
           newColor,
         );

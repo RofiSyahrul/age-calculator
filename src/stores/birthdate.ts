@@ -156,6 +156,13 @@ export const age = derived<typeof birthdate, AgeDetail>(
   {},
 );
 
-export const isBirthdayParty = derived(age, $age => {
-  return $age.day === 0 && $age.month === 0;
-});
+export const confettiLive = writable(1);
+
+export const isBirthdayParty = derived(
+  [age, confettiLive],
+  ([$age, $confettiLive]) => {
+    return ($age.day ?? 0) < $confettiLive && $age.month === 0;
+  },
+);
+
+export const runningTexts = writable<string[]>([]);

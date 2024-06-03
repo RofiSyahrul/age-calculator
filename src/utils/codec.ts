@@ -1,8 +1,26 @@
 // adapted from https://github.com/pveyes/katla/blob/main/utils/codec.ts
 // https://github.com/pveyes/katla
 
+const toBase64 = (value: string) => {
+  if (typeof window === 'undefined') {
+    return Buffer.from(value).toString('base64');
+  }
+
+  return btoa(value);
+};
+
+const fromBase64 = (value: string) => {
+  const binary = atob(value);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return new TextDecoder('utf-8').decode(bytes.buffer);
+};
+
 export function encode(value: string): string {
-  const base64 = Buffer.from(value).toString('base64');
+  const base64 = toBase64(value);
+
   const eqSuffixRegExp = /=*$/;
   const numberOfEqualSign =
     base64.match(eqSuffixRegExp)?.[0]?.length ?? 0;
@@ -33,5 +51,5 @@ export function decode(hash: string): string {
   const equalSign = '='.repeat(numberOfEqualSigns);
   base64 += equalSign;
 
-  return Buffer.from(base64, 'base64').toString();
+  return fromBase64(base64);
 }

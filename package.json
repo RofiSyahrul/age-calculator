@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@astrojs/svelte": "^3.0.0",
+    "@supabase/supabase-js": "^2.43.4",
     "astro": "^2.6.2",
     "colord": "^2.9.3",
     "svelte": "^3.55.0",

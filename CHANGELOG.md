@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/RofiSyahrul/age-calculator/compare/v4.0.0...v4.1.0) (2024-06-03)
+
+
+### Features
+
+* support special birthday party ([cafc92c](https://github.com/RofiSyahrul/age-calculator/commit/cafc92c920d45b47ee1f0964d397e3b5032e831d))
+
 ## [4.0.0](https://github.com/RofiSyahrul/age-calculator/compare/v3.0.0...v4.0.0) (2023-06-17)
 
 
